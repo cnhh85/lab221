@@ -71,6 +71,7 @@ public class Main {
               System.out.println("Name cannot be empty");
             }
           } while (name == null);
+          manager.searchByName(name);
           break;
         case 3:
           break;
