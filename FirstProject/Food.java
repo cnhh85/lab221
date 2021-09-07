@@ -70,7 +70,7 @@ public class Food {
 
   @Override
   public String toString() {
-    return "Food [ID=" + id + ", name=" + name + ", Weight=" + weight + ", type=" + type + ", place=" + place
-        + ", expiredDate=" + expiredDate + "]";
+    return "ID=" + getID() + " | name=" + getName() + " | weight=" + getWeight() + " | type=" + getType() + " | place="
+        + getPlace() + " | expiredDate=" + getExpiredDate();
   }
 }

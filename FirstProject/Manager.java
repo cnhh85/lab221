@@ -16,7 +16,7 @@ public class Manager extends ArrayList<Food> {
     this.add(food);
   }
 
-  public Food idSearch(int id) {
+  public Food searchByID(int id) {
     for (Food food : this) {
       if (food.getID() == id)
         return food;
@@ -24,12 +24,19 @@ public class Manager extends ArrayList<Food> {
     return null;
   }
 
-  public Food nameSearch(String name) {
+  public void searchByName(String name) {
+    ArrayList<Food> searchedList = new ArrayList<Food>();
     for (Food food : this) {
       if (food.getName().equals(name.toUpperCase()))
-        return food;
+        searchedList.add(food);
     }
-    return null;
+    if (searchedList.isEmpty()) {
+      System.out.println("No food found!");
+    } else {
+      searchedList.forEach(food -> {
+        System.out.println(food.toString());
+      });
+    }
   }
 
   private void sortList() {
@@ -42,21 +49,22 @@ public class Manager extends ArrayList<Food> {
   public void printDescendingList() {
     sortList();
     this.forEach(food -> {
-      System.out.println("Food [ID=" + food.getID() + ", name=" + food.getName() + ", Weight=" + food.getWeight()
-          + ", type=" + food.getType() + ", place=" + food.getPlace() + ", expiredDate=" + food.getExpiredDate() + "]");
+      System.out.println(food.toString());
     });
   }
 
   // public void writeToFile() {
-  //   try {
-  //     FileWriter writer = new FileWriter(FILENAME);
-  //     this.forEach(food -> {writer.write("Food [ID=" + food.getID() + ", name=" + food.getName() + ", Weight=" + food.getWeight()
-  //     + ", type=" + food.getType() + ", place=" + food.getPlace() + ", expiredDate=" + food.getExpiredDate() + "]");}) ;
-  //     myWriter.close();
-  //     System.out.println("Successfully wrote to the file.");
-  //   } catch (IOException e) {
-  //     System.out.println("An error occurred.");
-  //     e.printStackTrace();
-  //   }
+  // try {
+  // FileWriter writer = new FileWriter(FILENAME);
+  // this.forEach(food -> {writer.write("Food [ID=" + food.getID() + ", name=" +
+  // food.getName() + ", Weight=" + food.getWeight()
+  // + ", type=" + food.getType() + ", place=" + food.getPlace() + ",
+  // expiredDate=" + food.getExpiredDate() + "]");}) ;
+  // myWriter.close();
+  // System.out.println("Successfully wrote to the file.");
+  // } catch (IOException e) {
+  // System.out.println("An error occurred.");
+  // e.printStackTrace();
+  // }
   // }
 }
