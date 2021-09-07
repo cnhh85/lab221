@@ -1,9 +1,9 @@
 import java.util.Date;
 
 public class Food {
-  public int ID;
+  public int id;
   public String name;
-  public int Weight;
+  public int weight;
   public String type;
   public String place;
   public Date expiredDate;
@@ -11,21 +11,21 @@ public class Food {
   public Food() {
   }
 
-  public Food(int iD, String name, int weight, String type, String place, Date expiredDate) {
-    ID = iD;
+  public Food(int id, String name, int weight, String type, String place, Date expiredDate) {
+    this.id = id;
     this.name = name;
-    Weight = weight;
+    this.weight = weight;
     this.type = type;
     this.place = place;
     this.expiredDate = expiredDate;
   }
 
   public int getID() {
-    return ID;
+    return id;
   }
 
-  public void setID(int iD) {
-    ID = iD;
+  public void setID(int id) {
+    this.id = id;
   }
 
   public String getName() {
@@ -37,11 +37,11 @@ public class Food {
   }
 
   public int getWeight() {
-    return Weight;
+    return weight;
   }
 
   public void setWeight(int weight) {
-    Weight = weight;
+    this.weight = weight;
   }
 
   public String getType() {
@@ -70,7 +70,7 @@ public class Food {
 
   @Override
   public String toString() {
-    return "Food [ID=" + ID + ", name=" + name + ", Weight=" + Weight + ", type=" + type + ", place=" + place
+    return "Food [ID=" + id + ", name=" + name + ", Weight=" + weight + ", type=" + type + ", place=" + place
         + ", expiredDate=" + expiredDate + "]";
   }
 }
