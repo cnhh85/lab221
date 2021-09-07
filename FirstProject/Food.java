@@ -1,7 +1,7 @@
 import java.util.Date;
 
 public class Food {
-  public int id;
+  public String id;
   public String name;
   public int weight;
   public String type;
@@ -11,7 +11,7 @@ public class Food {
   public Food() {
   }
 
-  public Food(int id, String name, int weight, String type, String place, Date expiredDate) {
+  public Food(String id, String name, int weight, String type, String place, Date expiredDate) {
     this.id = id;
     this.name = name.toUpperCase();
     this.weight = weight;
@@ -20,11 +20,11 @@ public class Food {
     this.expiredDate = expiredDate;
   }
 
-  public int getID() {
+  public String getID() {
     return id;
   }
 
-  public void setID(int id) {
+  public void setID(String id) {
     this.id = id;
   }
 

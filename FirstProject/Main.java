@@ -1,6 +1,4 @@
 import java.util.Scanner;
-import java.util.regex.Pattern;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;
@@ -13,8 +11,9 @@ public class Main {
   private static void View() {
     Scanner scanner = new Scanner(System.in);
     Manager manager = new Manager();
-    int id, weight;
-    String name, type, place, expiredDate;
+    String id, name, type, place, expiredDate;
+    int weight;
+
     int choice;
     System.out.println("Welcome to Food Management - @ 2021 by SE160050 - Cao Nguyen Hoang Hiep");
     PrintInfo();
@@ -23,12 +22,14 @@ public class Main {
       switch (choice) {
         case 1:
           do {
-            System.out.print("Enter ID");
-            id = Integer.parseInt(scanner.nextLine());
-            if (manager.searchByID(id) != null) {
+            System.out.print("Enter ID: ");
+            id = scanner.nextLine();
+            if (id == null) {
+              System.out.println("ID cannot be empty");
+            } else if (manager.searchByID(id) != null) {
               System.out.println("ID already exists, please enter a different!");
             }
-          } while (manager.searchByID(id) != null);
+          } while (id == null || manager.searchByID(id) != null);
           do {
             System.out.print("Enter name: ");
             name = scanner.nextLine();
@@ -74,10 +75,24 @@ public class Main {
           manager.searchByName(name);
           break;
         case 3:
+          do {
+            System.out.print("Enter ID: ");
+            id = scanner.nextLine();
+            if (id == null) {
+              System.out.println("ID cannot be empty");
+            } else if (manager.searchByID(id) == null) {
+              System.out.println("ID already exists, please enter a different!");
+            }
+          } while (id == null || manager.searchByID(id) == null);
+          manager.remove(manager.searchByID(id));
           break;
         case 4:
+          manager.printDescendingList();
           break;
         case 5:
+          System.out.println("Saving!");
+          manager.saveToFile();
+          System.out.println("Saved to food.dat");
           break;
         case 6:
           break;

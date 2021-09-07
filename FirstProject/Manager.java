@@ -1,12 +1,17 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import java.io.FileWriter;
-import java.io.IOException;
-
 public class Manager extends ArrayList<Food> {
   private final String FILENAME = "food.dat";
+
+  private FileWriter fileWriter = null;
+  private BufferedWriter bufferedWriter = null;
+  private PrintWriter printWriter = null;
 
   public Manager() {
 
@@ -16,7 +21,7 @@ public class Manager extends ArrayList<Food> {
     this.add(food);
   }
 
-  public Food searchByID(int id) {
+  public Food searchByID(String id) {
     for (Food food : this) {
       if (food.getID() == id)
         return food;
@@ -48,23 +53,23 @@ public class Manager extends ArrayList<Food> {
 
   public void printDescendingList() {
     sortList();
+    System.out.println("DESCENDING LIST: ");
     this.forEach(food -> {
       System.out.println(food.toString());
     });
+    System.out.println("=================================");
   }
 
-  // public void writeToFile() {
-  // try {
-  // FileWriter writer = new FileWriter(FILENAME);
-  // this.forEach(food -> {writer.write("Food [ID=" + food.getID() + ", name=" +
-  // food.getName() + ", Weight=" + food.getWeight()
-  // + ", type=" + food.getType() + ", place=" + food.getPlace() + ",
-  // expiredDate=" + food.getExpiredDate() + "]");}) ;
-  // myWriter.close();
-  // System.out.println("Successfully wrote to the file.");
-  // } catch (IOException e) {
-  // System.out.println("An error occurred.");
-  // e.printStackTrace();
-  // }
-  // }
+  public void saveToFile() {
+    try {
+      fileWriter = new FileWriter(FILENAME, true);
+      bufferedWriter = new BufferedWriter(fileWriter);
+      printWriter = new PrintWriter(bufferedWriter);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    this.forEach(food -> {
+      printWriter.println(food.toString());
+    });
+  }
 }
