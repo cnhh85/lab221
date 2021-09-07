@@ -13,7 +13,7 @@ public class Food {
 
   public Food(int id, String name, int weight, String type, String place, Date expiredDate) {
     this.id = id;
-    this.name = name;
+    this.name = name.toUpperCase();
     this.weight = weight;
     this.type = type;
     this.place = place;
@@ -33,7 +33,7 @@ public class Food {
   }
 
   public void setName(String name) {
-    this.name = name;
+    this.name = name.toUpperCase();
   }
 
   public int getWeight() {
