@@ -1,4 +1,4 @@
-package src;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Food {
@@ -71,7 +71,7 @@ public class Food {
 
   @Override
   public String toString() {
-    return "ID=" + getID() + " | name=" + getName() + " | weight=" + getWeight() + "g | type=" + getType() + " | place="
-        + getPlace() + " | expiredDate=" + getExpiredDate();
+    return getClass().getSimpleName() + "[id=" + id + ", name=" + name + ", weight=" + weight + ", type=" + type
+        + ", place=" + place + ", expiredDate=" + new SimpleDateFormat("dd.MM.yyyy").format(expiredDate) + "]";
   }
 }

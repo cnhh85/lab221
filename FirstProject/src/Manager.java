@@ -1,8 +1,9 @@
-package src;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -13,6 +14,8 @@ public class Manager extends ArrayList<Food> {
   private FileWriter fileWriter = null;
   private BufferedWriter bufferedWriter = null;
   private PrintWriter printWriter = null;
+
+  private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
   public Manager() {
 
@@ -30,6 +33,11 @@ public class Manager extends ArrayList<Food> {
     return null;
   }
 
+  private void printItem(Food food) {
+    System.out.format("|%8s|%20s|%10d(g)|%15s|%10s|%12s|\n", food.getID(), food.getName(), food.getWeight(),
+        food.getType(), food.getPlace(), dateFormat.format(food.getExpiredDate()));
+  }
+
   public void searchByName(String name) {
     ArrayList<Food> searchedList = new ArrayList<Food>();
     for (Food food : this) {
@@ -39,9 +47,7 @@ public class Manager extends ArrayList<Food> {
     if (searchedList.isEmpty()) {
       System.out.println("No food found!");
     } else {
-      searchedList.forEach(food -> {
-        System.out.println(food.toString());
-      });
+      searchedList.forEach(food -> printItem(food));
     }
   }
 
@@ -55,8 +61,9 @@ public class Manager extends ArrayList<Food> {
   public void printDescendingList() {
     sortList();
     System.out.println("DESCENDING LIST: ");
+    System.out.format("|%8s|%20s|%13s|%15s|%10s|%12s|\n", "ID", "Name", "Weight", "Type", "Place", "Expired By");
     this.forEach(food -> {
-      System.out.println(food.toString());
+      printItem(food);
     });
     System.out.println("=================================");
   }
