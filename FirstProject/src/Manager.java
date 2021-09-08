@@ -1,7 +1,5 @@
-import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,10 +8,6 @@ import java.util.Comparator;
 
 public class Manager extends ArrayList<Food> {
   private final String FILENAME = "food.dat";
-
-  private FileWriter fileWriter = null;
-  private BufferedWriter bufferedWriter = null;
-  private PrintWriter printWriter = null;
 
   private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -61,23 +55,24 @@ public class Manager extends ArrayList<Food> {
   public void printDescendingList() {
     sortList();
     System.out.println("DESCENDING LIST: ");
+    System.out.println("=====================================================================================");
     System.out.format("|%8s|%20s|%13s|%15s|%10s|%12s|\n", "ID", "Name", "Weight", "Type", "Place", "Expired By");
     this.forEach(food -> {
       printItem(food);
     });
-    System.out.println("=================================");
+    System.out.println("=====================================================================================");
   }
 
   public void saveToFile() {
     try {
-      fileWriter = new FileWriter(FILENAME, true);
-      bufferedWriter = new BufferedWriter(fileWriter);
-      printWriter = new PrintWriter(bufferedWriter);
+      FileWriter writer = new FileWriter(FILENAME);
+      for (Food food : this) {
+        writer.write(food.getID() + "|" + food.getName() + "|" + food.getWeight() + "(g)|" + food.getType() + "|"
+            + food.getPlace() + "|" + dateFormat.format((food.getExpiredDate())));
+        writer.close();
+      }
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println("Something went wrong");
     }
-    this.forEach(food -> {
-      printWriter.println(food.toString());
-    });
   }
 }
