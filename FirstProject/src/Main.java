@@ -1,6 +1,5 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -64,12 +63,10 @@ public class Main {
           manager.saveToFile();
           System.out.println("Saved to food.dat");
           break;
-        case 6:
-          break;
         default:
           System.out.println("Invalid input, please try again!");
       }
-    } while (choice != 6);
+    } while (choice != 5);
   }
 
   private static void PrintInfo() {
@@ -78,8 +75,7 @@ public class Main {
     System.out.println("2. Search a food by name");
     System.out.println("3. Remove the food by ID");
     System.out.println("4. Print the food list in the descending order of expired date");
-    System.out.println("5. Save all the food to file");
-    System.out.println("6. Quit");
+    System.out.println("5. Save to file and exit");
     System.out.print("Your choice: ");
   }
 
@@ -132,6 +128,7 @@ public class Main {
       expiredDate = scanner.nextLine();
     } while (validateExpiredDate(expiredDate) == null);
     manager.addFood(new Food(id, name, weight, type, place, validateExpiredDate(expiredDate)));
+    System.out.println("Successfully added " + id + " | " + name);
   }
 
   private static void searchFunction() {
@@ -162,7 +159,7 @@ public class Main {
       }
     } while (id == null || manager.searchByID(id) == null);
     do {
-      System.out.println("Do you want to delete this food (Y/N)");
+      System.out.print("Do you want to delete this food (Y/N): ");
       confirmation = scanner.nextLine();
       if (!confirmation.matches("YyNn")) {
         confirmation = null;
@@ -170,24 +167,26 @@ public class Main {
     } while (confirmation == null);
     if (confirmation.toUpperCase().equals("Y")) {
       manager.remove(manager.searchByID(id));
+      System.out.println("Remove successfully!");
+    } else {
+      System.out.println("Remove failed!");
     }
   }
 
   private static Date validateExpiredDate(String expiredDate) {
-    Calendar today = Calendar.getInstance();
-    today.set(Calendar.HOUR_OF_DAY, 0);
+    Date today = new Date();
     if (expiredDate.trim().equals("")) {
       System.out.println("Expired date cannot be empty");
       return null;
     } else {
-      SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
+      SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
       format.setLenient(false);
       try {
         Date date = format.parse(expiredDate);
-        if (date.after(today.getTime())) {
+        if (date.after(today)) {
           return date;
         } else {
-          System.out.println("Expired date cannot before today");
+          System.out.println("Expired food!");
           return null;
         }
       } catch (ParseException e) {
