@@ -36,13 +36,15 @@ public class Main {
           break;
         case 2:
           do {
-            System.out.print("Enter food name: ");
-            name = scanner.nextLine();
-            if (name == null) {
-              System.out.println("Name cannot be empty");
-            }
-          } while (name == null);
-          manager.searchByName(name);
+            searchFunction();
+            do {
+              System.out.println("Do you want to remove another food (Y/N): ");
+              continueConfirmation = scanner.nextLine();
+              if (!continueConfirmation.matches("YyNn")) {
+                continueConfirmation = null;
+              }
+            } while (continueConfirmation == null);
+          } while (continueConfirmation.toUpperCase().equals("Y"));
           break;
         case 3:
           do {
@@ -132,6 +134,20 @@ public class Main {
       expiredDate = scanner.nextLine();
     } while (validateExpiredDate(expiredDate) == null);
     manager.addFood(new Food(id, name, weight, type, place, validateExpiredDate(expiredDate)));
+  }
+
+  private static void searchFunction() {
+    String name;
+    Scanner scanner = new Scanner(System.in);
+    Manager manager = new Manager();
+    do {
+      System.out.print("Enter food name: ");
+      name = scanner.nextLine();
+      if (name == null) {
+        System.out.println("Name cannot be empty");
+      }
+    } while (name == null);
+    manager.searchByName(name);
   }
 
   private static Date validateExpiredDate(String expiredDate) {
