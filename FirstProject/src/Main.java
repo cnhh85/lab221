@@ -12,8 +12,6 @@ public class Main {
   private static void View() {
     Scanner scanner = new Scanner(System.in);
     Manager manager = new Manager();
-    String id, name, type, place, expiredDate;
-    int weight;
 
     int choice;
     String continueConfirmation = null;
@@ -48,15 +46,15 @@ public class Main {
           break;
         case 3:
           do {
-            System.out.print("Enter ID: ");
-            id = scanner.nextLine();
-            if (id == null) {
-              System.out.println("ID cannot be empty");
-            } else if (manager.searchByID(id) == null) {
-              System.out.println("ID already exists, please enter a different!");
-            }
-          } while (id == null || manager.searchByID(id) == null);
-          manager.remove(manager.searchByID(id));
+            removeFunction();
+            do {
+              System.out.println("Do you want to remove another food (Y/N): ");
+              continueConfirmation = scanner.nextLine();
+              if (!continueConfirmation.matches("YyNn")) {
+                continueConfirmation = null;
+              }
+            } while (continueConfirmation == null);
+          } while (continueConfirmation.toUpperCase().equals("Y"));
           break;
         case 4:
           manager.printDescendingList();
@@ -148,6 +146,31 @@ public class Main {
       }
     } while (name == null);
     manager.searchByName(name);
+  }
+
+  private static void removeFunction() {
+    String id, confirmation = null;
+    Scanner scanner = new Scanner(System.in);
+    Manager manager = new Manager();
+    do {
+      System.out.print("Enter ID: ");
+      id = scanner.nextLine();
+      if (id == null) {
+        System.out.println("ID cannot be empty");
+      } else if (manager.searchByID(id) == null) {
+        System.out.println("ID already exists, please enter a different!");
+      }
+    } while (id == null || manager.searchByID(id) == null);
+    do {
+      System.out.println("Do you want to delete this food (Y/N)");
+      confirmation = scanner.nextLine();
+      if (!confirmation.matches("YyNn")) {
+        confirmation = null;
+      }
+    } while (confirmation == null);
+    if (confirmation.toUpperCase().equals("Y")) {
+      manager.remove(manager.searchByID(id));
+    }
   }
 
   private static Date validateExpiredDate(String expiredDate) {
