@@ -45,7 +45,7 @@ public class Manager extends ArrayList<Food> {
         searchedList.add(food);
     }
     if (searchedList.isEmpty()) {
-      System.out.println("No food found!");
+      System.out.println("“This food does not exist!");
     } else {
       searchedList.forEach(food -> printItem(food));
     }

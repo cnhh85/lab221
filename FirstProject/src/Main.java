@@ -16,6 +16,7 @@ public class Main {
     int weight;
 
     int choice;
+    String continueConfirmation = null;
     System.out.println("Welcome to Food Management - @ 2021 by SE160050 - Cao Nguyen Hoang Hiep");
     PrintInfo();
     do {
@@ -23,49 +24,15 @@ public class Main {
       switch (choice) {
         case 1:
           do {
-            System.out.print("Enter ID: ");
-            id = scanner.nextLine();
-            if (id == null) {
-              System.out.println("ID cannot be empty");
-            } else if (manager.searchByID(id) != null) {
-              System.out.println("ID already exists, please enter a different!");
-            }
-          } while (id == null || manager.searchByID(id) != null);
-          do {
-            System.out.print("Enter name: ");
-            name = scanner.nextLine();
-            if (name == null) {
-              System.out.println("Name cannot be empty");
-            }
-          } while (name == null);
-          weight = 0;
-          do {
-            try {
-              System.out.print("Enter weight(gram): ");
-              weight = Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
-              System.out.println("Invalid weight!");
-            }
-          } while (weight <= 0);
-          do {
-            System.out.print("Enter type: ");
-            type = scanner.nextLine();
-            if (type == null) {
-              System.out.println("Type cannot be empty");
-            }
-          } while (type == null);
-          do {
-            System.out.print("Enter place: ");
-            place = scanner.nextLine();
-            if (place == null) {
-              System.out.println("Place cannot be empty");
-            }
-          } while (place == null);
-          do {
-            System.out.print("Enter expired date (dd/mm//yyyy): ");
-            expiredDate = scanner.nextLine();
-          } while (validateExpiredDate(expiredDate) == null);
-          manager.addFood(new Food(id, name, weight, type, place, validateExpiredDate(expiredDate)));
+            addFunction();
+            do {
+              System.out.println("Do you want to add another food (Y/N): ");
+              continueConfirmation = scanner.nextLine();
+              if (!continueConfirmation.matches("YyNn")) {
+                continueConfirmation = null;
+              }
+            } while (continueConfirmation == null);
+          } while (continueConfirmation.toUpperCase().equals("Y"));
           break;
         case 2:
           do {
@@ -114,6 +81,57 @@ public class Main {
     System.out.println("5. Save all the food to file");
     System.out.println("6. Quit");
     System.out.print("Your choice: ");
+  }
+
+  private static void addFunction() {
+    Scanner scanner = new Scanner(System.in);
+    Manager manager = new Manager();
+    String id, name, type, place, expiredDate;
+    int weight;
+    do {
+      System.out.print("Enter ID: ");
+      id = scanner.nextLine();
+      if (id == null) {
+        System.out.println("ID cannot be empty");
+      } else if (manager.searchByID(id) != null) {
+        System.out.println("ID already exists, please enter a different!");
+      }
+    } while (id == null || manager.searchByID(id) != null);
+    do {
+      System.out.print("Enter name: ");
+      name = scanner.nextLine();
+      if (name == null) {
+        System.out.println("Name cannot be empty");
+      }
+    } while (name == null);
+    weight = 0;
+    do {
+      try {
+        System.out.print("Enter weight(gram): ");
+        weight = Integer.parseInt(scanner.nextLine());
+      } catch (NumberFormatException e) {
+        System.out.println("Invalid weight!");
+      }
+    } while (weight <= 0);
+    do {
+      System.out.print("Enter type: ");
+      type = scanner.nextLine();
+      if (type == null) {
+        System.out.println("Type cannot be empty");
+      }
+    } while (type == null);
+    do {
+      System.out.print("Enter place: ");
+      place = scanner.nextLine();
+      if (place == null) {
+        System.out.println("Place cannot be empty");
+      }
+    } while (place == null);
+    do {
+      System.out.print("Enter expired date (dd/mm//yyyy): ");
+      expiredDate = scanner.nextLine();
+    } while (validateExpiredDate(expiredDate) == null);
+    manager.addFood(new Food(id, name, weight, type, place, validateExpiredDate(expiredDate)));
   }
 
   private static Date validateExpiredDate(String expiredDate) {
