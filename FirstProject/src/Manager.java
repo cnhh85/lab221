@@ -1,3 +1,5 @@
+// Cao Nguyen Hoang Hiep . SE160050
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -21,8 +23,9 @@ public class Manager extends ArrayList<Food> {
 
   public Food searchByID(String id) {
     for (Food food : this) {
-      if (food.getID() == id)
+      if (food.getID().equals(id)) {
         return food;
+      }
     }
     return null;
   }

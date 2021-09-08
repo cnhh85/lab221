@@ -1,3 +1,4 @@
+// Cao Nguyen Hoang Hiep . SE160050
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -107,7 +108,7 @@ public class Main {
               if (id == null) {
                 System.out.println("ID cannot be empty");
               } else if (manager.searchByID(id) == null) {
-                System.out.println("ID already exists, please enter a different!");
+                System.out.println("Food not found!");
               }
             } while (id == null || manager.searchByID(id) == null);
             do {
