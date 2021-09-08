@@ -1,3 +1,4 @@
+package src;
 import java.util.Date;
 
 public class Food {
@@ -70,7 +71,7 @@ public class Food {
 
   @Override
   public String toString() {
-    return "ID=" + getID() + " | name=" + getName() + " | weight=" + getWeight() + " | type=" + getType() + " | place="
+    return "ID=" + getID() + " | name=" + getName() + " | weight=" + getWeight() + "g | type=" + getType() + " | place="
         + getPlace() + " | expiredDate=" + getExpiredDate();
   }
 }

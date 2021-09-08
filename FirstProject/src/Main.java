@@ -1,7 +1,9 @@
-import java.util.Scanner;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+package src;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Scanner;
 
 public class Main {
   public static void main(String[] args) {
@@ -37,10 +39,12 @@ public class Main {
               System.out.println("Name cannot be empty");
             }
           } while (name == null);
+          weight = 0;
           do {
-            System.out.print("Enter weight(gram): ");
-            weight = Integer.parseInt(scanner.nextLine());
-            if (weight <= 0) {
+            try {
+              System.out.print("Enter weight(gram): ");
+              weight = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
               System.out.println("Invalid weight!");
             }
           } while (weight <= 0);
@@ -114,6 +118,8 @@ public class Main {
   }
 
   private static Date validateExpiredDate(String expiredDate) {
+    Calendar today = Calendar.getInstance();
+    today.set(Calendar.HOUR_OF_DAY, 0);
     if (expiredDate.trim().equals("")) {
       System.out.println("Expired date cannot be empty");
       return null;
@@ -122,7 +128,7 @@ public class Main {
       format.setLenient(false);
       try {
         Date date = format.parse(expiredDate);
-        if (date.after(new Date())) {
+        if (date.after(today.getTime())) {
           return date;
         } else {
           System.out.println("Expired date cannot before today");
