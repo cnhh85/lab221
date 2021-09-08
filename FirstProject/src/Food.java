@@ -14,7 +14,7 @@ public class Food {
 
   public Food(String id, String name, int weight, String type, String place, Date expiredDate) {
     this.id = id;
-    this.name = name.toUpperCase();
+    this.name = name;
     this.weight = weight;
     this.type = type;
     this.place = place;
@@ -34,7 +34,7 @@ public class Food {
   }
 
   public void setName(String name) {
-    this.name = name.toUpperCase();
+    this.name = name;
   }
 
   public int getWeight() {
@@ -72,6 +72,6 @@ public class Food {
   @Override
   public String toString() {
     return getClass().getSimpleName() + "[id=" + id + ", name=" + name + ", weight=" + weight + ", type=" + type
-        + ", place=" + place + ", expiredDate=" + new SimpleDateFormat("dd.MM.yyyy").format(expiredDate) + "]";
+        + ", place=" + place + ", expiredDate=" + new SimpleDateFormat("dd/MM/yyyy").format(expiredDate) + "]";
   }
 }

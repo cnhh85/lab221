@@ -41,11 +41,11 @@ public class Manager extends ArrayList<Food> {
   public void searchByName(String name) {
     ArrayList<Food> searchedList = new ArrayList<Food>();
     for (Food food : this) {
-      if (food.getName().equals(name.toUpperCase()))
+      if (food.getName().equals(name))
         searchedList.add(food);
     }
     if (searchedList.isEmpty()) {
-      System.out.println("“This food does not exist!");
+      System.out.println("This food does not exist!");
     } else {
       searchedList.forEach(food -> printItem(food));
     }
