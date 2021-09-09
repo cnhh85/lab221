@@ -21,130 +21,13 @@ public class Main {
       choice = Integer.parseInt(scanner.nextLine());
       switch (choice) {
         case 1:
-          do {
-            String id, name, type, place = null, expiredDate;
-            int weight, placeChoice = 0;
-            do {
-              System.out.print("Enter ID: ");
-              id = scanner.nextLine();
-              if (id == null) {
-                System.out.println("ID cannot be empty");
-              } else if (manager.searchByID(id) != null) {
-                System.out.println("ID already exists, please enter a different!");
-              }
-            } while (id == null || manager.searchByID(id) != null);
-            do {
-              System.out.print("Enter name: ");
-              name = scanner.nextLine();
-              if (name == null) {
-                System.out.println("Name cannot be empty");
-              }
-            } while (name == null);
-            weight = 0;
-            do {
-              try {
-                System.out.print("Enter weight(gram): ");
-                weight = Integer.parseInt(scanner.nextLine());
-              } catch (NumberFormatException e) {
-                System.out.println("Invalid weight!");
-              }
-            } while (weight <= 0);
-            do {
-              System.out.print("Enter type: ");
-              type = scanner.nextLine();
-              if (type == null) {
-                System.out.println("Type cannot be empty");
-              }
-            } while (type == null);
-            do {
-              try {
-                System.out.print("Choose place (1 for Cooler, 2 for Freezer): ");
-                placeChoice = Integer.parseInt(scanner.nextLine());
-              } catch (NumberFormatException e) {
-                System.out.println("Invalid choice!");
-              }
-              if (placeChoice < 1 || placeChoice > 2) {
-                System.out.println("Invalid choice!");
-              }
-            } while (placeChoice < 1 || placeChoice > 2);
-            switch (placeChoice) {
-              case 1:
-                place = "cooler";
-                break;
-              case 2:
-                place = "Freezer";
-                break;
-            }
-            do {
-              System.out.print("Enter expired date (dd/mm//yyyy): ");
-              expiredDate = scanner.nextLine();
-            } while (validateExpiredDate(expiredDate) == null);
-            Date date = validateExpiredDate(expiredDate);
-            Food food = new Food(id, name, weight, type, place, date);
-            manager.addFood(food);
-            System.out.println("Successfully added " + id + "|" + name);
-            do {
-              System.out.print("Do you want to add another food (Y/N): ");
-              continueConfirmation = scanner.nextLine();
-              if (!continueConfirmation.matches("[YyNn]")) {
-                continueConfirmation = null;
-              }
-            } while (continueConfirmation == null);
-          } while (continueConfirmation.toUpperCase().equals("Y"));
+          manager.addFood();
           break;
         case 2:
-          do {
-            String name;
-            do {
-              System.out.print("Enter food name: ");
-              name = scanner.nextLine();
-              if (name == null) {
-                System.out.println("Name cannot be empty");
-              }
-            } while (name == null);
-            manager.searchByName(name);
-            do {
-              System.out.print("Do you want to search another food (Y/N): ");
-              continueConfirmation = scanner.nextLine();
-              if (!continueConfirmation.matches("[YyNn]")) {
-                continueConfirmation = null;
-              }
-            } while (continueConfirmation == null);
-          } while (continueConfirmation.toUpperCase().equals("Y"));
+          manager.searchFood();
           break;
         case 3:
-          do {
-            String id, confirmation = null;
-            do {
-              System.out.print("Enter ID: ");
-              id = scanner.nextLine();
-              if (id == null) {
-                System.out.println("ID cannot be empty");
-              } else if (manager.searchByID(id) == null) {
-                System.out.println("Food not found!");
-              }
-            } while (id == null || manager.searchByID(id) == null);
-            do {
-              System.out.print("Do you want to delete this food (Y/N): ");
-              confirmation = scanner.nextLine();
-              if (!confirmation.matches("[YyNn]")) {
-                confirmation = null;
-              }
-            } while (confirmation == null);
-            if (confirmation.toUpperCase().equals("Y")) {
-              manager.remove(manager.searchByID(id));
-              System.out.println("Remove successfully!");
-            } else {
-              System.out.println("Remove failed!");
-            }
-            do {
-              System.out.println("Do you want to remove another food (Y/N): ");
-              continueConfirmation = scanner.nextLine();
-              if (!continueConfirmation.matches("[YyNn]")) {
-                continueConfirmation = null;
-              }
-            } while (continueConfirmation == null);
-          } while (continueConfirmation.toUpperCase().equals("Y"));
+         manager.removeFood();
           break;
         case 4:
           manager.printDescendingList();
@@ -168,28 +51,5 @@ public class Main {
     System.out.println("4. Print the food list in the descending order of expired date");
     System.out.println("5. Save to file and exit");
     System.out.print("Your choice: ");
-  }
-
-  private static Date validateExpiredDate(String expiredDate) {
-    Date today = new Date();
-    if (expiredDate.trim().equals("")) {
-      System.out.println("Expired date cannot be empty");
-      return null;
-    } else {
-      SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-      format.setLenient(false);
-      try {
-        Date date = format.parse(expiredDate);
-        if (date.after(today)) {
-          return date;
-        } else {
-          System.out.println("Expired food!");
-          return null;
-        }
-      } catch (ParseException e) {
-        System.out.println("Invalid date format or date not exist");
-        return null;
-      }
-    }
   }
 }
