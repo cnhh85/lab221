@@ -1,8 +1,5 @@
 // Cao Nguyen Hoang Hiep . SE160050
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
@@ -14,7 +11,6 @@ public class Main {
     Scanner scanner = new Scanner(System.in);
     Manager manager = new Manager();
     int choice;
-    String continueConfirmation = null;
     System.out.println("Welcome to Food Management - @ 2021 by SE160050 - Cao Nguyen Hoang Hiep");
     do {
       PrintInfo();
