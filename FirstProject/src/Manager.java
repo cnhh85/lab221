@@ -38,7 +38,7 @@ public class Manager extends ArrayList<Food> {
   public void searchByName(String name) {
     ArrayList<Food> searchedList = new ArrayList<Food>();
     for (Food food : this) {
-      if (food.getName().equals(name))
+      if (food.getName().toUpperCase().contains(name.toUpperCase()))
         searchedList.add(food);
     }
     if (searchedList.isEmpty()) {

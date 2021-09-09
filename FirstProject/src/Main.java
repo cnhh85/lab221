@@ -1,4 +1,5 @@
 // Cao Nguyen Hoang Hiep . SE160050
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,8 +22,8 @@ public class Main {
       switch (choice) {
         case 1:
           do {
-            String id, name, type, place, expiredDate;
-            int weight;
+            String id, name, type, place = null, expiredDate;
+            int weight, placeChoice = 0;
             do {
               System.out.print("Enter ID: ");
               id = scanner.nextLine();
@@ -56,12 +57,24 @@ public class Main {
               }
             } while (type == null);
             do {
-              System.out.print("Enter place: ");
-              place = scanner.nextLine();
-              if (place == null) {
-                System.out.println("Place cannot be empty");
+              try {
+                System.out.print("Choose place (1 for Cooler, 2 for Freezer): ");
+                placeChoice = Integer.parseInt(scanner.nextLine());
+              } catch (NumberFormatException e) {
+                System.out.println("Invalid choice!");
               }
-            } while (place == null);
+              if (placeChoice < 1 || placeChoice > 2) {
+                System.out.println("Invalid choice!");
+              }
+            } while (placeChoice < 1 || placeChoice > 2);
+            switch (placeChoice) {
+              case 1:
+                place = "cooler";
+                break;
+              case 2:
+                place = "Freezer";
+                break;
+            }
             do {
               System.out.print("Enter expired date (dd/mm//yyyy): ");
               expiredDate = scanner.nextLine();
@@ -71,7 +84,7 @@ public class Main {
             manager.addFood(food);
             System.out.println("Successfully added " + id + "|" + name);
             do {
-              System.out.println("Do you want to add another food (Y/N): ");
+              System.out.print("Do you want to add another food (Y/N): ");
               continueConfirmation = scanner.nextLine();
               if (!continueConfirmation.matches("[YyNn]")) {
                 continueConfirmation = null;
@@ -91,7 +104,7 @@ public class Main {
             } while (name == null);
             manager.searchByName(name);
             do {
-              System.out.println("Do you want to remove another food (Y/N): ");
+              System.out.print("Do you want to search another food (Y/N): ");
               continueConfirmation = scanner.nextLine();
               if (!continueConfirmation.matches("[YyNn]")) {
                 continueConfirmation = null;
