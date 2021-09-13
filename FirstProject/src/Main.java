@@ -10,11 +10,15 @@ public class Main {
   private static void View() {
     Scanner scanner = new Scanner(System.in);
     Manager manager = new Manager();
-    int choice;
+    int choice = 0;
     System.out.println("Welcome to Food Management - @ 2021 by SE160050 - Cao Nguyen Hoang Hiep");
     do {
       PrintInfo();
-      choice = Integer.parseInt(scanner.nextLine());
+      try {
+        choice = Integer.parseInt(scanner.nextLine());
+      } catch (NumberFormatException e) {
+        System.out.println("Invalid input, please try again!");
+      }
       switch (choice) {
         case 1:
           manager.addFood();
@@ -23,7 +27,7 @@ public class Main {
           manager.searchFood();
           break;
         case 3:
-         manager.removeFood();
+          manager.removeFood();
           break;
         case 4:
           manager.printDescendingList();

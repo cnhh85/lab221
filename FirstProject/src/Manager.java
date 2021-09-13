@@ -72,7 +72,7 @@ public class Manager extends ArrayList<Food> {
           break;
       }
       do {
-        System.out.print("Enter expired date (dd/mm//yyyy): ");
+        System.out.print("Enter expired date (dd/mm/yyyy): ");
         expiredDate = scanner.nextLine();
       } while (validateExpiredDate(expiredDate) == null);
       Date date = validateExpiredDate(expiredDate);
@@ -152,7 +152,7 @@ public class Manager extends ArrayList<Food> {
     System.out.format("|%8s|%20s|%13s|%15s|%10s|%12s|\n", "ID", "Name", "Weight", "Type", "Place", "Expired By");
     this.forEach(food -> {
       printItem(food);
-    });
+    }); 
     System.out.println("=====================================================================================");
   }
 
