@@ -23,24 +23,19 @@ public class Manager extends ArrayList<Food> {
 
   public void addFood() {
     String id, name, type, continueConfirmation, expiredDate, place = null;
-    int weight, placeChoice = 0;
+    int weight, placeChoice = -1;
     do {
       do {
         System.out.print("Enter ID: ");
         id = scanner.nextLine();
-        if (id == null) {
-          System.out.println("ID cannot be empty");
-        } else if (searchByID(id) != null) {
+        if (searchByID(id) != null) {
           System.out.println("ID already exists, please enter a different!");
         }
-      } while (id == null || searchByID(id) != null);
+      } while (isEmpty(id) || searchByID(id) != null);
       do {
         System.out.print("Enter name: ");
         name = scanner.nextLine();
-        if (name == null) {
-          System.out.println("Name cannot be empty");
-        }
-      } while (name == null);
+      } while (isEmpty(name));
       weight = 0;
       do {
         try {
@@ -56,10 +51,7 @@ public class Manager extends ArrayList<Food> {
       do {
         System.out.print("Enter type: ");
         type = scanner.nextLine();
-        if (type == null) {
-          System.out.println("Type cannot be empty");
-        }
-      } while (type == null);
+      } while (isEmpty(type));
       do {
         try {
           System.out.print("Choose place (1 for Cooler, 2 for Freezer): ");
@@ -73,7 +65,7 @@ public class Manager extends ArrayList<Food> {
       } while (placeChoice < 1 || placeChoice > 2);
       switch (placeChoice) {
         case 1:
-          place = "cooler";
+          place = "Cooler";
           break;
         case 2:
           place = "Freezer";
@@ -170,8 +162,8 @@ public class Manager extends ArrayList<Food> {
       for (Food food : this) {
         writer.write(food.getID() + "|" + food.getName() + "|" + food.getWeight() + "(g)|" + food.getType() + "|"
             + food.getPlace() + "|" + dateFormat.format((food.getExpiredDate())));
-        writer.close();
       }
+      writer.close();
     } catch (IOException e) {
       System.out.println("Something went wrong");
     }
@@ -231,6 +223,15 @@ public class Manager extends ArrayList<Food> {
         System.out.println("Invalid date format or date not exist");
         return null;
       }
+    }
+  }
+
+  private static boolean isEmpty(String string) {
+    if (string.equals("")) {
+      System.out.println("String cannot be empty");
+      return true;
+    } else {
+      return false;
     }
   }
 }
