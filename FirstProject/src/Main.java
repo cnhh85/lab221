@@ -18,27 +18,35 @@ public class Main {
         choice = Integer.parseInt(scanner.nextLine());
       } catch (NumberFormatException e) {
         System.out.println("Invalid input, please try again!");
+        System.out.println();
       }
       switch (choice) {
         case 1:
           manager.addFood();
+          System.out.println();
           break;
         case 2:
           manager.searchFood();
+          System.out.println();
           break;
         case 3:
           manager.removeFood();
+          System.out.println();
           break;
         case 4:
           manager.printDescendingList();
+          System.out.println();
           break;
         case 5:
           System.out.println("Saving!");
           manager.saveToFile();
           System.out.println("Saved to food.dat");
           break;
+        case 0:
+          break;
         default:
           System.out.println("Invalid input, please try again!");
+          System.out.println();
       }
     } while (choice != 5);
   }

@@ -36,6 +36,7 @@ public class Manager extends ArrayList<Food> {
         System.out.print("Enter name: ");
         name = scanner.nextLine();
       } while (isEmpty(name));
+
       weight = 0;
       do {
         try {
@@ -43,11 +44,13 @@ public class Manager extends ArrayList<Food> {
           weight = Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e) {
           System.out.println("Invalid weight!");
+          continue;
         }
-        if (weight <= 0 || weight >= 10000) {
-          System.out.println("Invalid weight!");
+        if (!(weight > 0 && weight < 10000)) {
+          System.out.println("Invalid weight! The weight must be greater than 0 and under 10000");
         }
-      } while (weight <= 0 || weight >= 10000);
+      } while (!(weight > 0 && weight < 10000));
+
       do {
         System.out.print("Enter type: ");
         type = scanner.nextLine();
@@ -59,10 +62,10 @@ public class Manager extends ArrayList<Food> {
         } catch (NumberFormatException e) {
           System.out.println("Invalid choice!");
         }
-        if (placeChoice < 1 || placeChoice > 2) {
+        if (placeChoice != 1 && placeChoice != 2) {
           System.out.println("Invalid choice!");
         }
-      } while (placeChoice < 1 || placeChoice > 2);
+      } while (placeChoice != 1 && placeChoice != 2);
       switch (placeChoice) {
         case 1:
           place = "Cooler";
@@ -71,11 +74,18 @@ public class Manager extends ArrayList<Food> {
           place = "Freezer";
           break;
       }
+
+      Date date = null;
       do {
         System.out.print("Enter expired date (dd/mm/yyyy): ");
         expiredDate = scanner.nextLine();
-      } while (validateExpiredDate(expiredDate) == null);
-      Date date = validateExpiredDate(expiredDate);
+        if (!expiredDate.matches("^\\d{1,2}/\\d{1,2}/\\d{4}$")) {
+          System.out.println("Invalid date format or date not exist");
+          continue;
+        }
+        date = validateExpiredDate(expiredDate);
+      } while (date == null);
+
       Food food = new Food(id, name, weight, type, place, date);
       this.add(food);
       System.out.println("Successfully added " + id + "|" + name);
@@ -152,7 +162,7 @@ public class Manager extends ArrayList<Food> {
     System.out.format("|%8s|%20s|%13s|%15s|%10s|%12s|\n", "ID", "Name", "Weight", "Type", "Place", "Expired By");
     this.forEach(food -> {
       printItem(food);
-    }); 
+    });
     System.out.println("=====================================================================================");
   }
 
@@ -161,7 +171,7 @@ public class Manager extends ArrayList<Food> {
       FileWriter writer = new FileWriter(FILENAME);
       for (Food food : this) {
         writer.write(food.getID() + "|" + food.getName() + "|" + food.getWeight() + "(g)|" + food.getType() + "|"
-            + food.getPlace() + "|" + dateFormat.format((food.getExpiredDate())));
+            + food.getPlace() + "|" + dateFormat.format((food.getExpiredDate())) + "\n");
       }
       writer.close();
     } catch (IOException e) {
