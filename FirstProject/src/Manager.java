@@ -49,7 +49,10 @@ public class Manager extends ArrayList<Food> {
         } catch (NumberFormatException e) {
           System.out.println("Invalid weight!");
         }
-      } while (weight <= 0);
+        if (weight <= 0 || weight >= 10000) {
+          System.out.println("Invalid weight!");
+        }
+      } while (weight <= 0 || weight >= 10000);
       do {
         System.out.print("Enter type: ");
         type = scanner.nextLine();
@@ -114,6 +117,7 @@ public class Manager extends ArrayList<Food> {
       } while (continueConfirmation == null);
     } while (continueConfirmation.toUpperCase().equals("Y"));
   }
+
   public void removeFood() {
     String id, continueConfirmation, confirmation = null;
     do {
@@ -151,7 +155,7 @@ public class Manager extends ArrayList<Food> {
 
   public void printDescendingList() {
     sortList();
-    System.out.println("DESCENDING LIST: ");
+    System.out.println("LIST OF FOODS: ");
     System.out.println("=====================================================================================");
     System.out.format("|%8s|%20s|%13s|%15s|%10s|%12s|\n", "ID", "Name", "Weight", "Type", "Place", "Expired By");
     this.forEach(food -> {
