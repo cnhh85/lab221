@@ -105,10 +105,10 @@ public class Manager extends ArrayList<Food> {
       do {
         System.out.print("Enter food name: ");
         name = scanner.nextLine();
-        if (name == null) {
+        if (name.equals("")) {
           System.out.println("Name cannot be empty");
         }
-      } while (name == null);
+      } while (name.equals(""));
       searchByName(name);
       do {
         System.out.print("Do you want to search another food (Y/N): ");
@@ -126,12 +126,12 @@ public class Manager extends ArrayList<Food> {
       do {
         System.out.print("Enter ID: ");
         id = scanner.nextLine();
-        if (id == null) {
+        if (id.equals("")) {
           System.out.println("ID cannot be empty");
         } else if (searchByID(id) == null) {
           System.out.println("Food not found!");
         }
-      } while (id == null || searchByID(id) == null);
+      } while (id.equals("") || searchByID(id) == null);
       do {
         System.out.print("Do you want to delete this food (Y/N): ");
         confirmation = scanner.nextLine();
