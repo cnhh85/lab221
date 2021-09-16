@@ -6,10 +6,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 import Model.Injection;
@@ -109,8 +107,8 @@ public class Manager extends ArrayList<Injection> {
 
   private Injection create(String data) {
     String tokens[] = data.split("\\|");
-    return new Injection(tokens[0], tokens[1], tokens[2], tokens[3], tokens[4], handleParseDate(tokens[5]),
-        handleParseDate(tokens[6]));
+    return new Injection(tokens[0], tokens[1], tokens[2], tokens[3], tokens[4], Utility.handleParseDate(tokens[5]),
+        Utility.handleParseDate(tokens[6]));
   }
 
   public void remove(String injectionID) {
@@ -167,16 +165,6 @@ public class Manager extends ArrayList<Injection> {
       } catch (IOException e) {
         e.printStackTrace();
       }
-  }
-
-  private Date handleParseDate(String inputDate) {
-    try {
-      Date date = dateFormat.parse(inputDate);
-      return date;
-    } catch (ParseException e) {
-      System.out.print("Something when wrong");
-      return null;
-    }
   }
 
 }
