@@ -14,12 +14,15 @@ public class Injection {
   public Injection() {
   }
 
-  public Injection(String injectionID, String studentID, String vaccineID, String firstPlace, Date firstDate) {
+  public Injection(String injectionID, String studentID, String vaccineID, String firstPlace, String secondPlace,
+      Date firstDate, Date secondDate) {
     this.injectionID = injectionID;
     this.studentID = studentID;
     this.vaccineID = vaccineID;
     this.firstPlace = firstPlace;
+    this.secondPlace = secondPlace;
     this.firstDate = firstDate;
+    this.secondDate = secondDate;
   }
 
   public String getInjectionID() {
