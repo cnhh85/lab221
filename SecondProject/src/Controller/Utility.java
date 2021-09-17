@@ -35,7 +35,6 @@ public class Utility {
       Date date = dateFormat.parse(inputDate);
       return date;
     } catch (ParseException e) {
-      System.out.print("Something when wrong");
       return null;
     }
   }
