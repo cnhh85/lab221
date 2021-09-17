@@ -6,9 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Utility {
-  private static final String STUDENTFILE = "student.dat";
-  private static final String VACCINEFILE = "vaccine.dat";
-
   private static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
   // protected Date validateExpiredDate(String inputDate) {

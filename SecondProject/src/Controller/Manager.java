@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import Model.Injection;
+import Model.Student;
+import Model.Vaccine;
 
 public class Manager extends ArrayList<Injection> {
   private final String FILENAME = "injection.dat";
@@ -23,8 +25,16 @@ public class Manager extends ArrayList<Injection> {
 
   private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
+  private ArrayList<Student> students = new ArrayList<Student>();
+  private ArrayList<Vaccine> vaccines = new ArrayList<Vaccine>();
+
+  private final String studentFILE = "student.dat";
+  private final String vaccineFILE = "vaccine.dat";
+
   public Manager() {
     getAll();
+    getAllStudent();
+    getVaccine();
   }
 
   public Injection get(String injectionID) {
@@ -51,6 +61,32 @@ public class Manager extends ArrayList<Injection> {
     }
 
     close();
+  }
+
+  private void getAllStudent() {
+    try {
+      scanner = new Scanner(Paths.get(studentFILE), "UTF-8");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    while (scanner.hasNextLine()) {
+      String data = scanner.nextLine();
+      Student student = createStudent(data);
+      students.add(student);
+    }
+  }
+
+  private void getVaccine() {
+    try {
+      scanner = new Scanner(Paths.get(vaccineFILE), "UTF-8");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    while (scanner.hasNextLine()) {
+      String data = scanner.nextLine();
+      Vaccine vaccine = createVaccine(data);
+      vaccines.add(vaccine);
+    }
   }
 
   private void open(boolean readMode) {
@@ -109,6 +145,16 @@ public class Manager extends ArrayList<Injection> {
     String tokens[] = data.split("\\|");
     return new Injection(tokens[0], tokens[1], tokens[2], tokens[3], tokens[4], Utility.handleParseDate(tokens[5]),
         Utility.handleParseDate(tokens[6]));
+  }
+
+  private Student createStudent(String data) {
+    String tokens[] = data.split("\\;");
+    return new Student(tokens[0], tokens[1]);
+  }
+
+  private Vaccine createVaccine(String data) {
+    String tokens[] = data.split("\\;");
+    return new Vaccine(tokens[0], tokens[1]);
   }
 
   public void remove(String injectionID) {
