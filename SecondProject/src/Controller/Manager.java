@@ -28,8 +28,8 @@ public class Manager extends ArrayList<Injection> {
   private ArrayList<Student> students = new ArrayList<Student>();
   private ArrayList<Vaccine> vaccines = new ArrayList<Vaccine>();
 
-  private final String studentFILE = "student.dat";
-  private final String vaccineFILE = "vaccine.dat";
+  private final String studentFILE = "student.txt";
+  private final String vaccineFILE = "vaccine.txt";
 
   public Manager() {
     getAll();
