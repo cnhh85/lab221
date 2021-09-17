@@ -14,12 +14,6 @@ public class Main {
     System.out.println("COVID-19 VACCINE MANAGEMENT BY @ SE160050 - CAO NGUYEN HOANG HIEP");
     System.out.println("=================================================================" + "\n\n");
     int menuChoice = 0;
-    System.out
-        .println("==================================================================================================");
-    System.out.format("|%13s|%12s|%12s|%15s|%12s|%15s|%12s|\n", "InjectionID", "StudentID", "VaccineID", "FirstPlace",
-        "FirstDate", "SecondPlace", "SecondDate");
-    System.out
-        .println("--------------------------------------------------------------------------------------------------");
     Scanner scanner = new Scanner(System.in);
     Manager manager = new Manager();
     do {
