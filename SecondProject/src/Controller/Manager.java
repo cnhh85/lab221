@@ -213,4 +213,32 @@ public class Manager extends ArrayList<Injection> {
       }
   }
 
+  private void printInjection(Injection injection) {
+    System.out.format("|%13s|%12s|%12s|%15s|%12s|%15s|%12s|\n", injection.getInjectionID(), injection.getStudentID(),
+        injection.getVaccineID(), injection.getFirstPlace(), dateFormat.format(injection.getFirstDate()),
+        injection.getSecondPlace() == null ? "none" : injection.getSecondPlace(),
+        injection.getSecondDate() == null ? "none" : dateFormat.format(injection.getSecondDate()));
+  }
+
+  public void printInjectionList() {
+    System.out.println("INJECTION LIST:");
+    System.out
+        .println("===================================================================================================");
+    System.out.format("|%13s|%12s|%12s|%15s|%12s|%15s|%12s|\n", "InjectionID", "StudentID", "VaccineID", "FirstPlace",
+        "FirstDate", "SecondPlace", "SecondDate");
+    System.out
+        .println("---------------------------------------------------------------------------------------------------");
+    this.forEach(injection -> printInjection(injection));
+    System.out
+        .println("===================================================================================================");
+
+  }
+
+  private void printStudent(Student student) {
+    System.out.format("|%12s|%30s|\n", student.getStudentID(), student.getName());
+  }
+
+  private void printVaccine(Vaccine vaccine) {
+    System.out.format("|%12s|%15s|\n", vaccine.getVaccineID(), vaccine.getName());
+  }
 }

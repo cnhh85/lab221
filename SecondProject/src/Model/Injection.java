@@ -14,6 +14,16 @@ public class Injection {
   public Injection() {
   }
 
+  public Injection(String injectionID, String studentID, String vaccineID, String firstPlace, Date firstDate) {
+    this.injectionID = injectionID;
+    this.studentID = studentID;
+    this.vaccineID = vaccineID;
+    this.firstPlace = firstPlace;
+    this.firstDate = firstDate;
+    this.secondPlace = null;
+    this.secondDate = null;
+  }
+
   public Injection(String injectionID, String studentID, String vaccineID, String firstPlace, String secondPlace,
       Date firstDate, Date secondDate) {
     this.injectionID = injectionID;
