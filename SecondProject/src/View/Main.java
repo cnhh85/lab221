@@ -84,8 +84,13 @@ public class Main {
     } while (Utility.isEmpty(id) || controller.get(id) != null);
 
     do {
-
-    } while (true);
+      studentController.printStudentList();
+      System.out.println("Enter student ID: ");
+      studentID = sc.nextLine();
+      if (controller.get(studentID) == null) {
+        System.out.println("This student does not exist, please try a different!");
+      }
+    } while (Utility.isEmpty(studentID) || controller.get(studentID) == null);
 
   }
 }

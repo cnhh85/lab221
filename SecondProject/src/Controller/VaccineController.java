@@ -93,11 +93,11 @@ public class VaccineController extends ArrayList<Vaccine> implements FileConnect
   }
 
   public void printVaccineList() {
-    System.out.println("VACCINE LIST:");
-    System.out.println("===================================================");
+    System.out.println("\n\nVACCINE LIST:");
+    System.out.println("=============================================");
     System.out.format("|%12s|%30s|\n", "VaccineID", "VaccineName");
-    System.out.println("---------------------------------------------------");
+    System.out.println("---------------------------------------------");
     this.forEach(vaccine -> printVaccine(vaccine));
-    System.out.println("===================================================");
+    System.out.println("=============================================\n\n");
   }
 }

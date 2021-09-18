@@ -179,7 +179,7 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
 
   public void printInjectionList() {
     getAll();
-    System.out.println("INJECTION LIST:");
+    System.out.println("\n\nINJECTION LIST:");
     System.out
         .println("===================================================================================================");
     System.out.format("|%13s|%12s|%12s|%15s|%12s|%15s|%12s|\n", "InjectionID", "StudentID", "VaccineID", "FirstPlace",
@@ -188,7 +188,7 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
         .println("---------------------------------------------------------------------------------------------------");
     this.forEach(injection -> printInjection(injection));
     System.out
-        .println("===================================================================================================");
+        .println("===================================================================================================\n\n");
 
   }
 
