@@ -238,7 +238,26 @@ public class Manager extends ArrayList<Injection> {
     System.out.format("|%12s|%30s|\n", student.getStudentID(), student.getName());
   }
 
+  public void printStudentList() {
+    System.out.println("STUDENT LIST:");
+    System.out.println("===================================================");
+    System.out.format("|%12s|%30s|\n", "StudentID", "StudentName");
+    System.out.println("---------------------------------------------------");
+    students.forEach(student -> printStudent(student));
+    System.out.println("===================================================");
+
+  }
+
   private void printVaccine(Vaccine vaccine) {
     System.out.format("|%12s|%15s|\n", vaccine.getVaccineID(), vaccine.getName());
+  }
+
+  public void printVaccineList() {
+    System.out.println("VACCINE LIST:");
+    System.out.println("===================================================");
+    System.out.format("|%12s|%30s|\n", "VaccineID", "VaccineName");
+    System.out.println("---------------------------------------------------");
+    vaccines.forEach(vaccine -> printVaccine(vaccine));
+    System.out.println("===================================================");
   }
 }
