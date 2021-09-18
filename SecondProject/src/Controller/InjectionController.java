@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import Model.Injection;
-import Model.Student;
-import Model.Vaccine;
 
 public class InjectionController extends ArrayList<Injection> implements FileConnection<Injection> {
   private final String FILENAME = "injection.dat";

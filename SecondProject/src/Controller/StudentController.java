@@ -82,13 +82,13 @@ public class StudentController extends ArrayList<Student> implements FileConnect
   }
 
   public void printStudentList() {
+    getAll();
     System.out.println("STUDENT LIST:");
     System.out.println("===================================================");
     System.out.format("|%12s|%30s|\n", "StudentID", "StudentName");
     System.out.println("---------------------------------------------------");
     this.forEach(student -> printStudent(student));
     System.out.println("===================================================");
-
   }
 
 }

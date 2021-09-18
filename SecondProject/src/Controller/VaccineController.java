@@ -80,6 +80,8 @@ public class VaccineController extends ArrayList<Vaccine> implements FileConnect
   }
 
   public void printVaccineList() {
+    getAll();
+    
     System.out.println("VACCINE LIST:");
     System.out.println("===================================================");
     System.out.format("|%12s|%30s|\n", "VaccineID", "VaccineName");
