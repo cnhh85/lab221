@@ -25,16 +25,8 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
 
   private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-  private ArrayList<Student> students = new ArrayList<Student>();
-  private ArrayList<Vaccine> vaccines = new ArrayList<Vaccine>();
-
-  private final String studentFILE = "student.txt";
-  private final String vaccineFILE = "vaccine.txt";
-
   public InjectionController() {
     getAll();
-    getAllStudent();
-    getAllVaccine();
   }
 
   public Injection get(String injectionID) {
@@ -61,32 +53,6 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
     }
 
     close();
-  }
-
-  private void getAllStudent() {
-    try {
-      scanner = new Scanner(Paths.get(studentFILE), "UTF-8");
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    while (scanner.hasNextLine()) {
-      String data = scanner.nextLine();
-      Student student = createStudent(data);
-      students.add(student);
-    }
-  }
-
-  private void getAllVaccine() {
-    try {
-      scanner = new Scanner(Paths.get(vaccineFILE), "UTF-8");
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    while (scanner.hasNextLine()) {
-      String data = scanner.nextLine();
-      Vaccine vaccine = createVaccine(data);
-      vaccines.add(vaccine);
-    }
   }
 
   @Override
@@ -142,20 +108,11 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
 
   }
 
+  @Override
   public Injection create(String data) {
     String tokens[] = data.split("\\|");
     return new Injection(tokens[0], tokens[1], tokens[2], tokens[3], tokens[4], Utility.handleParseDate(tokens[5]),
         Utility.handleParseDate(tokens[6]));
-  }
-
-  private Student createStudent(String data) {
-    String tokens[] = data.split("\\;");
-    return new Student(tokens[0], tokens[1]);
-  }
-
-  private Vaccine createVaccine(String data) {
-    String tokens[] = data.split("\\;");
-    return new Vaccine(tokens[0], tokens[1]);
   }
 
   public void remove(String injectionID) {
@@ -200,6 +157,7 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
     close();
   }
 
+  @Override
   public void close() {
     if (scanner != null)
       scanner.close();
@@ -234,37 +192,6 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
     System.out
         .println("===================================================================================================");
 
-  }
-
-  private void printStudent(Student student) {
-    System.out.format("|%12s|%30s|\n", student.getStudentID(), student.getName());
-  }
-
-  public void printStudentList() {
-    getAllStudent();
-
-    System.out.println("STUDENT LIST:");
-    System.out.println("===================================================");
-    System.out.format("|%12s|%30s|\n", "StudentID", "StudentName");
-    System.out.println("---------------------------------------------------");
-    students.forEach(student -> printStudent(student));
-    System.out.println("===================================================");
-
-  }
-
-  private void printVaccine(Vaccine vaccine) {
-    System.out.format("|%12s|%15s|\n", vaccine.getVaccineID(), vaccine.getName());
-  }
-
-  public void printVaccineList() {
-    getAllVaccine();
-
-    System.out.println("VACCINE LIST:");
-    System.out.println("===================================================");
-    System.out.format("|%12s|%30s|\n", "VaccineID", "VaccineName");
-    System.out.println("---------------------------------------------------");
-    vaccines.forEach(vaccine -> printVaccine(vaccine));
-    System.out.println("===================================================");
   }
 
   public void addInjection() {
