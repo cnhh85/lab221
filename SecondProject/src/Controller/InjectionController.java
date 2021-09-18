@@ -14,7 +14,7 @@ import Model.Injection;
 import Model.Student;
 import Model.Vaccine;
 
-public class Manager extends ArrayList<Injection> {
+public class InjectionController extends ArrayList<Injection> implements FileConnection<Injection> {
   private final String FILENAME = "injection.dat";
 
   private Scanner scanner = null;
@@ -31,7 +31,7 @@ public class Manager extends ArrayList<Injection> {
   private final String studentFILE = "student.txt";
   private final String vaccineFILE = "vaccine.txt";
 
-  public Manager() {
+  public InjectionController() {
     getAll();
     getAllStudent();
     getAllVaccine();
@@ -89,7 +89,8 @@ public class Manager extends ArrayList<Injection> {
     }
   }
 
-  private void open(boolean readMode) {
+  @Override
+  public void open(boolean readMode) {
     if (readMode) {
       try {
         scanner = new Scanner(Paths.get(FILENAME), "UTF-8");
@@ -141,7 +142,7 @@ public class Manager extends ArrayList<Injection> {
 
   }
 
-  private Injection create(String data) {
+  public Injection create(String data) {
     String tokens[] = data.split("\\|");
     return new Injection(tokens[0], tokens[1], tokens[2], tokens[3], tokens[4], Utility.handleParseDate(tokens[5]),
         Utility.handleParseDate(tokens[6]));
@@ -199,7 +200,7 @@ public class Manager extends ArrayList<Injection> {
     close();
   }
 
-  private void close() {
+  public void close() {
     if (scanner != null)
       scanner.close();
 
@@ -241,6 +242,7 @@ public class Manager extends ArrayList<Injection> {
 
   public void printStudentList() {
     getAllStudent();
+
     System.out.println("STUDENT LIST:");
     System.out.println("===================================================");
     System.out.format("|%12s|%30s|\n", "StudentID", "StudentName");
@@ -256,11 +258,41 @@ public class Manager extends ArrayList<Injection> {
 
   public void printVaccineList() {
     getAllVaccine();
+
     System.out.println("VACCINE LIST:");
     System.out.println("===================================================");
     System.out.format("|%12s|%30s|\n", "VaccineID", "VaccineName");
     System.out.println("---------------------------------------------------");
     vaccines.forEach(vaccine -> printVaccine(vaccine));
     System.out.println("===================================================");
+  }
+
+  public void addInjection() {
+    String id = null, studentID = null, vaccineID = null, firstPlace = null, firstDate = null;
+    Scanner sc = new Scanner(System.in);
+
+    System.out.println("ADD AN INJECTION\n");
+
+    do {
+      System.out.println("Enter injection ID: ");
+      id = sc.nextLine();
+      if (searchByID(id) != null) {
+        System.out.println("ID already exists, please try a different!");
+      }
+    } while (Utility.isEmpty(id) || searchByID(id) != null);
+
+    do {
+
+    } while (true);
+
+  }
+
+  private Injection searchByID(String id) {
+    for (Injection injection : this) {
+      if (injection.getInjectionID().equals(id)) {
+        return injection;
+      }
+    }
+    return null;
   }
 }

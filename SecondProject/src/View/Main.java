@@ -2,7 +2,7 @@ package View;
 
 import java.util.Scanner;
 
-import Controller.Manager;
+import Controller.InjectionController;
 
 public class Main {
   public static void main(String[] args) {
@@ -15,7 +15,7 @@ public class Main {
     System.out.println("=================================================================" + "\n\n");
     int menuChoice = 0;
     Scanner scanner = new Scanner(System.in);
-    Manager manager = new Manager();
+    InjectionController controller = new InjectionController();
     do {
       try {
         printMenu();
@@ -26,9 +26,10 @@ public class Main {
       }
       switch (menuChoice) {
         case 1:
-          manager.printInjectionList();
+          controller.printInjectionList();
           break;
         case 2:
+          controller.addInjection();
           break;
         case 3:
           break;
