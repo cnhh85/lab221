@@ -34,7 +34,7 @@ public class Manager extends ArrayList<Injection> {
   public Manager() {
     getAll();
     getAllStudent();
-    getVaccine();
+    getAllVaccine();
   }
 
   public Injection get(String injectionID) {
@@ -76,7 +76,7 @@ public class Manager extends ArrayList<Injection> {
     }
   }
 
-  private void getVaccine() {
+  private void getAllVaccine() {
     try {
       scanner = new Scanner(Paths.get(vaccineFILE), "UTF-8");
     } catch (IOException e) {
@@ -221,6 +221,7 @@ public class Manager extends ArrayList<Injection> {
   }
 
   public void printInjectionList() {
+    getAll();
     System.out.println("INJECTION LIST:");
     System.out
         .println("===================================================================================================");
@@ -239,6 +240,7 @@ public class Manager extends ArrayList<Injection> {
   }
 
   public void printStudentList() {
+    getAllStudent();
     System.out.println("STUDENT LIST:");
     System.out.println("===================================================");
     System.out.format("|%12s|%30s|\n", "StudentID", "StudentName");
@@ -253,6 +255,7 @@ public class Manager extends ArrayList<Injection> {
   }
 
   public void printVaccineList() {
+    getAllVaccine();
     System.out.println("VACCINE LIST:");
     System.out.println("===================================================");
     System.out.format("|%12s|%30s|\n", "VaccineID", "VaccineName");

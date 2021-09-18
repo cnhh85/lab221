@@ -26,6 +26,7 @@ public class Main {
       }
       switch (menuChoice) {
         case 1:
+          manager.printInjectionList();
           break;
         case 2:
           break;
@@ -47,7 +48,7 @@ public class Main {
 
   private static void printMenu() {
     System.out.println("1. Show injection information");
-    System.out.println("2. Add ne injection");
+    System.out.println("2. Add an injection");
     System.out.println("3. Update injection information");
     System.out.println("4. Delete injection");
     System.out.println("5. Search injection by studentID");
