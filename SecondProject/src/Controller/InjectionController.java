@@ -192,32 +192,4 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
 
   }
 
-  public void addInjection() {
-    String id = null, studentID = null, vaccineID = null, firstPlace = null, firstDate = null;
-    Scanner sc = new Scanner(System.in);
-
-    System.out.println("ADD AN INJECTION\n");
-
-    do {
-      System.out.println("Enter injection ID: ");
-      id = sc.nextLine();
-      if (searchByID(id) != null) {
-        System.out.println("ID already exists, please try a different!");
-      }
-    } while (Utility.isEmpty(id) || searchByID(id) != null);
-
-    do {
-
-    } while (true);
-
-  }
-
-  private Injection searchByID(String id) {
-    for (Injection injection : this) {
-      if (injection.getInjectionID().equals(id)) {
-        return injection;
-      }
-    }
-    return null;
-  }
 }

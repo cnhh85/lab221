@@ -27,7 +27,7 @@ public class Utility {
 
   // }
 
-  protected static Date handleParseDate(String inputDate) {
+  public static Date handleParseDate(String inputDate) {
     try {
       Date date = dateFormat.parse(inputDate);
       return date;
@@ -36,7 +36,7 @@ public class Utility {
     }
   }
 
-  protected static boolean isEmpty(String string) {
+  public static boolean isEmpty(String string) {
     if (string.equals("")) {
       System.out.println("String cannot be empty");
       return true;

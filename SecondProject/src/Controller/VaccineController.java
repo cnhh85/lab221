@@ -22,6 +22,19 @@ public class VaccineController extends ArrayList<Vaccine> implements FileConnect
     getAll();
   }
 
+  public Vaccine get(String vaccineID) {
+
+    getAll();
+
+    for (Vaccine vaccine : this) {
+      if (vaccine.getVaccineID().equals(vaccineID)) {
+        return vaccine;
+      }
+    }
+
+    return null;
+  }
+
   private void getAll() {
     boolean readMode = true;
     open(readMode);
@@ -80,8 +93,6 @@ public class VaccineController extends ArrayList<Vaccine> implements FileConnect
   }
 
   public void printVaccineList() {
-    getAll();
-    
     System.out.println("VACCINE LIST:");
     System.out.println("===================================================");
     System.out.format("|%12s|%30s|\n", "VaccineID", "VaccineName");

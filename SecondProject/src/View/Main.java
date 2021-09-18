@@ -3,6 +3,9 @@ package View;
 import java.util.Scanner;
 
 import Controller.InjectionController;
+import Controller.StudentController;
+import Controller.Utility;
+import Controller.VaccineController;
 
 public class Main {
   public static void main(String[] args) {
@@ -15,7 +18,6 @@ public class Main {
     System.out.println("=================================================================" + "\n\n");
     int menuChoice = 0;
     Scanner scanner = new Scanner(System.in);
-    InjectionController controller = new InjectionController();
     do {
       try {
         printMenu();
@@ -26,10 +28,10 @@ public class Main {
       }
       switch (menuChoice) {
         case 1:
-          controller.printInjectionList();
+          printInjection();
           break;
         case 2:
-          controller.addInjection();
+          addInjection();
           break;
         case 3:
           break;
@@ -56,5 +58,34 @@ public class Main {
     System.out.println("6. Store data to file");
     System.out.println("7. Exit");
     System.out.print("Your choice: ");
+  }
+
+  private static void printInjection() {
+    InjectionController controller = new InjectionController();
+    controller.printInjectionList();
+  }
+
+  private static void addInjection() {
+    InjectionController controller = new InjectionController();
+    String id = null, studentID = null, vaccineID = null, firstPlace = null, firstDate = null;
+    Scanner sc = new Scanner(System.in);
+
+    StudentController studentController = new StudentController();
+    VaccineController vaccineController = new VaccineController();
+
+    System.out.println("ADD AN INJECTION\n");
+
+    do {
+      System.out.println("Enter injection ID: ");
+      id = sc.nextLine();
+      if (controller.get(id) != null) {
+        System.out.println("ID already exists, please try a different!");
+      }
+    } while (Utility.isEmpty(id) || controller.get(id) != null);
+
+    do {
+
+    } while (true);
+
   }
 }

@@ -23,6 +23,19 @@ public class StudentController extends ArrayList<Student> implements FileConnect
     getAll();
   }
 
+  public Student get(String studentID) {
+
+    getAll();
+
+    for (Student student : this) {
+      if (student.getStudentID().equals(studentID)) {
+        return student;
+      }
+    }
+
+    return null;
+  }
+
   private void getAll() {
     boolean readMode = true;
     open(readMode);
@@ -82,7 +95,6 @@ public class StudentController extends ArrayList<Student> implements FileConnect
   }
 
   public void printStudentList() {
-    getAll();
     System.out.println("STUDENT LIST:");
     System.out.println("===================================================");
     System.out.format("|%12s|%30s|\n", "StudentID", "StudentName");
