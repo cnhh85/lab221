@@ -145,15 +145,16 @@ public class Main {
         } while (Utility.isEmpty(secondPlace));
 
         do {
-          System.out.print("Enter first date (dd/mm/yyyy): ");
-          firstDateInput = sc.nextLine();
+          System.out.print("Enter second date (dd/mm/yyyy): ");
+          secondDateInput = sc.nextLine();
           if (!firstDateInput.matches("^\\d{1,2}/\\d{1,2}/\\d{4}$")) {
             System.out.println("Invalid date format");
             continue;
           }
-          firstDate = Utility.handleParseDate(firstDateInput);
+          secondDate = Utility.handleParseDate(firstDateInput);
           if (firstDate == null) {
             System.out.println("Date not exist");
+            continue;
           }
         } while (firstDate == null);
       }
