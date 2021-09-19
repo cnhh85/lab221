@@ -43,12 +43,16 @@ public class Main {
           updateInjection(controller, studentController, vaccineController);
           break;
         case 4:
+          deleteInjection(controller, studentController, vaccineController);
           break;
         case 5:
+          // searchByStudentID();
           break;
         case 6:
+          // saveToFile();
           break;
         case 7:
+          System.out.println("EXITING!");
           break;
         default:
           System.out.println("Invalid choice!" + "\n\n");
@@ -262,6 +266,44 @@ public class Main {
 
       controller.set(idx, injection);
 
+    }
+
+  }
+
+  public static void deleteInjection(InjectionController controller, StudentController studentController,
+      VaccineController vaccineController) {
+    Scanner sc = new Scanner(System.in);
+
+    Injection injection = null;
+
+    String injectionID = null, confirmation = null;
+
+    do {
+      System.out.println("Enter injection ID: ");
+      injectionID = sc.nextLine();
+      injection = controller.get(injectionID);
+      if (injection == null) {
+        System.out.println("This injection does not exist, please try a different!");
+      }
+    } while (Utility.isEmpty(injectionID) || injection == null);
+
+    System.out.println();
+    controller.printInjection(injection);
+    System.out.println();
+
+    do {
+      System.out.print("Do you want to delete this injection (Y/N): ");
+      confirmation = sc.nextLine();
+      if (!confirmation.matches("[YyNn]")) {
+        confirmation = null;
+      }
+    } while (confirmation == null);
+
+    if (confirmation.toUpperCase().equals("Y")) {
+      controller.remove(injection);
+      System.out.println("Remove successfully");
+    } else {
+      System.out.println("Remove fail");
     }
 
   }
