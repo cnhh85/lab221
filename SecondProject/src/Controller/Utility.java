@@ -28,6 +28,7 @@ public class Utility {
     tail = handleParseDate(dateFormat.format(calendar.getTime()));
 
     if (secondDate.before(head) || secondDate.after(tail)) {
+      System.out.println("The second dose of vaccine must be given 4 to 12 weeks after the first injection!");
       return false;
     } else {
       return true;

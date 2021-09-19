@@ -154,9 +154,8 @@ public class Main {
           secondDate = Utility.handleParseDate(firstDateInput);
           if (firstDate == null) {
             System.out.println("Date not exist");
-            continue;
           }
-        } while (firstDate == null);
+        } while (firstDate == null || !Utility.isValidSecondDate(firstDate, secondDate));
       }
 
       controller.add(injection);
