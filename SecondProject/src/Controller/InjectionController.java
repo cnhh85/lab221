@@ -29,8 +29,6 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
 
   public Injection get(String injectionID) {
 
-    getAll();
-
     for (Injection injection : this) {
       if (injection.getInjectionID().equals(injectionID)) {
         return injection;
@@ -72,89 +70,6 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
     }
   }
 
-  public void update(String injectionID, Injection injection) {
-
-    getAll();
-
-    boolean readMode = false;
-    open(readMode);
-
-    StringBuffer buffer = new StringBuffer();
-
-    while (scanner.hasNextLine()) {
-      buffer.append(scanner.nextLine() + System.lineSeparator());
-    }
-    Injection old = get(injectionID);
-
-    String oldLine = old.getInjectionID() + "|" + old.getStudentID() + "|" + old.getVaccineID() + "|"
-        + old.getFirstPlace() + "|" + old.getSecondPlace() + "|" + dateFormat.format(old.getFirstDate()) + "|"
-        + dateFormat.format(old.getSecondDate());
-
-    String newLine = injection.getInjectionID() + "|" + injection.getStudentID() + "|" + injection.getVaccineID() + "|"
-        + injection.getFirstPlace() + "|" + injection.getSecondPlace() + "|"
-        + dateFormat.format(injection.getFirstDate()) + "|" + dateFormat.format(injection.getSecondDate());
-
-    String fileContents = buffer.toString();
-    fileContents = fileContents.replaceAll(oldLine, newLine);
-
-    try {
-      fileWriter.append(fileContents);
-      fileWriter.flush();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-  }
-
-  @Override
-  public Injection create(String data) {
-    String tokens[] = data.split("\\|");
-    return new Injection(tokens[0], tokens[1], tokens[2], tokens[3], Utility.handleParseDate(tokens[4]), tokens[5],
-        Utility.handleParseDate(tokens[6]));
-  }
-
-  public void remove(String injectionID) {
-    getAll();
-
-    boolean readMode = false;
-    open(readMode);
-
-    StringBuffer buffer = new StringBuffer();
-
-    while (scanner.hasNextLine()) {
-      buffer.append(scanner.nextLine() + System.lineSeparator());
-    }
-    Injection old = get(injectionID);
-
-    String oldLine = old.getInjectionID() + "|" + old.getStudentID() + "|" + old.getVaccineID() + "|"
-        + old.getFirstPlace() + "|" + old.getSecondPlace() + "|" + dateFormat.format(old.getFirstDate()) + "|"
-        + dateFormat.format(old.getSecondDate());
-
-    String fileContents = buffer.toString();
-    fileContents = fileContents.replaceAll(oldLine, "");
-
-    try {
-      fileWriter.append(fileContents);
-      fileWriter.flush();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-  }
-
-  public void save(Injection injection) {
-    getAll();
-
-    boolean readMode = false;
-    open(readMode);
-
-    printWriter.println(injection.getInjectionID() + "|" + injection.getStudentID() + "|" + injection.getVaccineID()
-        + "|" + injection.getFirstPlace() + "|" + dateFormat.format(injection.getFirstDate()) + "|"
-        + injection.getSecondPlace() + "|" + dateFormat.format(injection.getSecondDate()));
-
-    close();
-  }
-
   @Override
   public void close() {
     if (scanner != null)
@@ -170,7 +85,29 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
       }
   }
 
-  private void printInjection(Injection injection) {
+  @Override
+  public Injection create(String data) {
+    String tokens[] = data.split("\\|");
+    return new Injection(tokens[0], tokens[1], tokens[2], tokens[3], Utility.handleParseDate(tokens[4]), tokens[5],
+        Utility.handleParseDate(tokens[6]));
+  }
+
+  public void saveToFile() {
+
+    boolean readMode = false;
+    open(readMode);
+
+    for (Injection injection : this) {
+      printWriter.println(injection.getInjectionID() + "|" + injection.getStudentID() + "|" + injection.getVaccineID()
+          + "|" + injection.getFirstPlace() + "|" + injection.getSecondPlace() + "|"
+          + dateFormat.format(injection.getFirstDate()) + "|" + dateFormat.format(injection.getSecondDate()));
+
+    }
+
+    close();
+  }
+
+  public void printInjection(Injection injection) {
     System.out.format("|%13s|%12s|%12s|%15s|%12s|%15s|%12s|\n", injection.getInjectionID(), injection.getStudentID(),
         injection.getVaccineID(), injection.getFirstPlace(), dateFormat.format(injection.getFirstDate()),
         injection.getSecondPlace() == null ? "none" : injection.getSecondPlace(),

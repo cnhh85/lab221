@@ -40,6 +40,7 @@ public class Main {
           addInjection(controller, studentController, vaccineController);
           break;
         case 3:
+          updateInjection(controller, studentController, vaccineController);
           break;
         case 4:
           break;
@@ -163,7 +164,7 @@ public class Main {
 
       controller.add(injection);
       System.out.println("Successfully added injection " + injectionID);
-      
+
       do {
         System.out.print("Do you want to add another injection (Y/N): ");
         continueConfirmation = sc.nextLine();
@@ -172,6 +173,97 @@ public class Main {
         }
       } while (continueConfirmation == null);
     } while (continueConfirmation.toUpperCase().equals("Y"));
+  }
+
+  private static void updateInjection(InjectionController controller, StudentController studentController,
+      VaccineController vaccineController) {
+
+    Scanner sc = new Scanner(System.in);
+
+    Injection injection = null;
+    Date secondDate = null;
+
+    String injectionID = null, keepUpdate = null, secondPlace, secondDateInput;
+    int idx;
+
+    do {
+      System.out.println("Enter injection ID: ");
+      injectionID = sc.nextLine();
+      injection = controller.get(injectionID);
+      if (injection == null) {
+        System.out.println("This injection does not exist, please try a different!");
+      }
+    } while (Utility.isEmpty(injectionID) || injection == null);
+
+    idx = controller.indexOf(injection);
+
+    if (injection.getSecondPlace() != null) {
+      do {
+        System.out.print("This student has already completed 2 injections, do you want to continue update (Y/N): ");
+        keepUpdate = sc.nextLine();
+        if (!keepUpdate.matches("[YyNn]")) {
+          keepUpdate = null;
+        }
+      } while (keepUpdate == null);
+
+      if (keepUpdate.toUpperCase().equals("Y")) {
+        controller.printInjection(injection);
+
+        do {
+          System.out.print("Enter second place: ");
+          secondPlace = sc.nextLine();
+        } while (Utility.isEmpty(secondPlace));
+
+        injection.setSecondPlace(secondPlace);
+
+        do {
+          System.out.print("Enter second date (dd/mm/yyyy): ");
+          secondDateInput = sc.nextLine();
+          if (!secondDateInput.matches("^\\d{1,2}/\\d{1,2}/\\d{4}$")) {
+            System.out.println("Invalid date format");
+            continue;
+          }
+          secondDate = Utility.handleParseDate(secondDateInput);
+          if (secondDate == null) {
+            System.out.println("Date not exist");
+          }
+        } while (secondDate == null || !Utility.isValidSecondDate(injection.getFirstDate(), secondDate));
+
+        injection.setSecondDate(secondDate);
+
+        controller.set(idx, injection);
+
+      }
+
+    } else {
+      controller.printInjection(injection);
+
+      do {
+        System.out.print("Enter second place: ");
+        secondPlace = sc.nextLine();
+      } while (Utility.isEmpty(secondPlace));
+
+      injection.setSecondPlace(secondPlace);
+
+      do {
+        System.out.print("Enter second date (dd/mm/yyyy): ");
+        secondDateInput = sc.nextLine();
+        if (!secondDateInput.matches("^\\d{1,2}/\\d{1,2}/\\d{4}$")) {
+          System.out.println("Invalid date format");
+          continue;
+        }
+        secondDate = Utility.handleParseDate(secondDateInput);
+        if (secondDate == null) {
+          System.out.println("Date not exist");
+        }
+      } while (secondDate == null || !Utility.isValidSecondDate(injection.getFirstDate(), secondDate));
+
+      injection.setSecondDate(secondDate);
+
+      controller.set(idx, injection);
+
+    }
+
   }
 
 }
