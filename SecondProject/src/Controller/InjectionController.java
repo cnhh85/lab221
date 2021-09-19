@@ -109,7 +109,7 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
   @Override
   public Injection create(String data) {
     String tokens[] = data.split("\\|");
-    return new Injection(tokens[0], tokens[1], tokens[2], tokens[3], tokens[4], Utility.handleParseDate(tokens[5]),
+    return new Injection(tokens[0], tokens[1], tokens[2], tokens[3], Utility.handleParseDate(tokens[4]), tokens[5],
         Utility.handleParseDate(tokens[6]));
   }
 
@@ -149,8 +149,8 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
     open(readMode);
 
     printWriter.println(injection.getInjectionID() + "|" + injection.getStudentID() + "|" + injection.getVaccineID()
-        + "|" + injection.getFirstPlace() + "|" + injection.getSecondPlace() + "|"
-        + dateFormat.format(injection.getFirstDate()) + "|" + dateFormat.format(injection.getSecondDate()));
+        + "|" + injection.getFirstPlace() + "|" + dateFormat.format(injection.getFirstDate()) + "|"
+        + injection.getSecondPlace() + "|" + dateFormat.format(injection.getSecondDate()));
 
     close();
   }
@@ -187,8 +187,8 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
     System.out
         .println("---------------------------------------------------------------------------------------------------");
     this.forEach(injection -> printInjection(injection));
-    System.out
-        .println("===================================================================================================\n\n");
+    System.out.println(
+        "===================================================================================================\n\n");
 
   }
 

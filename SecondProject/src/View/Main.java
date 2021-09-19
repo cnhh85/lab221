@@ -147,19 +147,23 @@ public class Main {
         do {
           System.out.print("Enter second date (dd/mm/yyyy): ");
           secondDateInput = sc.nextLine();
-          if (!firstDateInput.matches("^\\d{1,2}/\\d{1,2}/\\d{4}$")) {
+          if (!secondDateInput.matches("^\\d{1,2}/\\d{1,2}/\\d{4}$")) {
             System.out.println("Invalid date format");
             continue;
           }
-          secondDate = Utility.handleParseDate(firstDateInput);
-          if (firstDate == null) {
+          secondDate = Utility.handleParseDate(secondDateInput);
+          if (secondDate == null) {
             System.out.println("Date not exist");
           }
-        } while (firstDate == null || !Utility.isValidSecondDate(firstDate, secondDate));
+        } while (secondDate == null || !Utility.isValidSecondDate(firstDate, secondDate));
+
+        injection = new Injection(injectionID, studentID, vaccineID, firstPlace, firstDate, secondPlace, secondDate);
+
       }
 
       controller.add(injection);
       System.out.println("Successfully added injection " + injectionID);
+      
       do {
         System.out.print("Do you want to add another injection (Y/N): ");
         continueConfirmation = sc.nextLine();
