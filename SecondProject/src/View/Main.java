@@ -1,5 +1,6 @@
 package View;
 
+import java.util.Date;
 import java.util.Scanner;
 
 import Controller.InjectionController;
@@ -13,6 +14,10 @@ public class Main {
   }
 
   private static void view() {
+    InjectionController controller = new InjectionController();
+    StudentController studentController = new StudentController();
+    VaccineController vaccineController = new VaccineController();
+
     System.out.println("=================================================================");
     System.out.println("COVID-19 VACCINE MANAGEMENT BY @ SE160050 - CAO NGUYEN HOANG HIEP");
     System.out.println("=================================================================" + "\n\n");
@@ -28,10 +33,10 @@ public class Main {
       }
       switch (menuChoice) {
         case 1:
-          printInjection();
+          printInjection(controller);
           break;
         case 2:
-          addInjection();
+          addInjection(controller, studentController, vaccineController);
           break;
         case 3:
           break;
@@ -60,37 +65,72 @@ public class Main {
     System.out.print("Your choice: ");
   }
 
-  private static void printInjection() {
-    InjectionController controller = new InjectionController();
+  private static void printInjection(InjectionController controller) {
     controller.printInjectionList();
   }
 
-  private static void addInjection() {
-    InjectionController controller = new InjectionController();
-    String id = null, studentID = null, vaccineID = null, firstPlace = null, firstDate = null;
+  private static void addInjection(InjectionController controller, StudentController studentController,
+      VaccineController vaccineController) {
+
     Scanner sc = new Scanner(System.in);
-
-    StudentController studentController = new StudentController();
-    VaccineController vaccineController = new VaccineController();
-
-    System.out.println("ADD AN INJECTION\n");
-
+    String continueConfirmation = null;
     do {
-      System.out.println("Enter injection ID: ");
-      id = sc.nextLine();
-      if (controller.get(id) != null) {
-        System.out.println("ID already exists, please try a different!");
-      }
-    } while (Utility.isEmpty(id) || controller.get(id) != null);
+      String injectionID = null, studentID = null, vaccineID = null, firstPlace = null, firstDate = null;
+      Date date = null;
 
-    do {
-      studentController.printStudentList();
-      System.out.println("Enter student ID: ");
-      studentID = sc.nextLine();
-      if (controller.get(studentID) == null) {
-        System.out.println("This student does not exist, please try a different!");
-      }
-    } while (Utility.isEmpty(studentID) || controller.get(studentID) == null);
+      System.out.println("ADD AN INJECTION\n");
 
+      do {
+        System.out.println("Enter injection ID: ");
+        injectionID = sc.nextLine();
+        if (controller.get(injectionID) != null) {
+          System.out.println("ID already exists, please try a different!");
+        }
+      } while (Utility.isEmpty(injectionID) || controller.get(injectionID) != null);
+
+      do {
+        studentController.printStudentList();
+        System.out.println("Enter student ID: ");
+        studentID = sc.nextLine();
+        if (studentController.get(studentID) == null) {
+          System.out.println("This student does not exist, please try a different!");
+        }
+      } while (Utility.isEmpty(studentID) || studentController.get(studentID) == null);
+
+      do {
+        vaccineController.printVaccineList();
+        System.out.println("Enter vaccine ID: ");
+        vaccineID = sc.nextLine();
+        if (vaccineController.get(vaccineID) == null) {
+          System.out.println("This vaccine does not exist, please try a different!");
+        }
+      } while (Utility.isEmpty(vaccineID) || vaccineController.get(vaccineID) == null);
+
+      do {
+        System.out.print("Enter first place: ");
+        firstPlace = sc.nextLine();
+      } while (Utility.isEmpty(firstPlace));
+
+      do {
+        System.out.print("Enter first date (dd/mm/yyyy): ");
+        firstDate = sc.nextLine();
+        date = Utility.handleParseDate(firstDate);
+        if (date == null) {
+          System.out.println("Invalid date format or date not exist");
+        }
+      } while (date == null);
+
+
+      
+      System.out.println("Successfully added injection " + injectionID);
+      do {
+        System.out.print("Do you want to add another injection (Y/N): ");
+        continueConfirmation = sc.nextLine();
+        if (!continueConfirmation.matches("[YyNn]")) {
+          continueConfirmation = null;
+        }
+      } while (continueConfirmation == null);
+    } while (continueConfirmation.toUpperCase().equals("Y"));
   }
+
 }
