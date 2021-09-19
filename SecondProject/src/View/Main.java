@@ -7,6 +7,7 @@ import Controller.InjectionController;
 import Controller.StudentController;
 import Controller.Utility;
 import Controller.VaccineController;
+import Model.Injection;
 
 public class Main {
   public static void main(String[] args) {
@@ -75,8 +76,11 @@ public class Main {
     Scanner sc = new Scanner(System.in);
     String continueConfirmation = null;
     do {
-      String injectionID = null, studentID = null, vaccineID = null, firstPlace = null, firstDate = null;
-      Date date = null;
+      Injection injection = null;
+      String injectionID = null, studentID = null, vaccineID = null, firstPlace = null, firstDateInput = null,
+          secondPlace = null, secondDateInput = null, secondConfirmation = null;
+      Date firstDate = null;
+      Date secondDate = null;
 
       System.out.println("ADD AN INJECTION\n");
 
@@ -113,15 +117,48 @@ public class Main {
 
       do {
         System.out.print("Enter first date (dd/mm/yyyy): ");
-        firstDate = sc.nextLine();
-        date = Utility.handleParseDate(firstDate);
-        if (date == null) {
-          System.out.println("Invalid date format or date not exist");
+        firstDateInput = sc.nextLine();
+        if (!firstDateInput.matches("^\\d{1,2}/\\d{1,2}/\\d{4}$")) {
+          System.out.println("Invalid date format");
+          continue;
         }
-      } while (date == null);
+        firstDate = Utility.handleParseDate(firstDateInput);
+        if (firstDate == null) {
+          System.out.println("Date not exist");
+        }
+      } while (firstDate == null);
 
+      do {
+        System.out.print("Do you want to add second information (Y/N): ");
+        secondConfirmation = sc.nextLine();
+        if (!secondConfirmation.matches("[YyNn]")) {
+          secondConfirmation = null;
+        }
+      } while (secondConfirmation == null);
 
-      
+      if (!secondConfirmation.toUpperCase().equals("Y")) {
+        injection = new Injection(injectionID, studentID, vaccineID, firstPlace, firstDate);
+      } else {
+        do {
+          System.out.print("Enter second place: ");
+          secondPlace = sc.nextLine();
+        } while (Utility.isEmpty(secondPlace));
+
+        do {
+          System.out.print("Enter first date (dd/mm/yyyy): ");
+          firstDateInput = sc.nextLine();
+          if (!firstDateInput.matches("^\\d{1,2}/\\d{1,2}/\\d{4}$")) {
+            System.out.println("Invalid date format");
+            continue;
+          }
+          firstDate = Utility.handleParseDate(firstDateInput);
+          if (firstDate == null) {
+            System.out.println("Date not exist");
+          }
+        } while (firstDate == null);
+      }
+
+      controller.add(injection);
       System.out.println("Successfully added injection " + injectionID);
       do {
         System.out.print("Do you want to add another injection (Y/N): ");

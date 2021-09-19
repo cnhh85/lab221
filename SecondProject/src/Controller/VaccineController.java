@@ -35,7 +35,7 @@ public class VaccineController extends ArrayList<Vaccine> implements FileConnect
     return null;
   }
 
-  private void getAll() {
+  public void getAll() {
     boolean readMode = true;
     open(readMode);
 

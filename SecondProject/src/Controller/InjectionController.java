@@ -40,7 +40,7 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
     return null;
   }
 
-  private void getAll() {
+  public void getAll() {
     boolean readMode = true;
     open(readMode);
 
