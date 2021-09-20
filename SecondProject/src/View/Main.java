@@ -87,7 +87,7 @@ public class Main {
       System.out.println("ADD AN INJECTION\n");
 
       do {
-        System.out.println("Enter injection ID: ");
+        System.out.print("Enter injection ID: ");
         injectionID = sc.nextLine();
         if (controller.get(injectionID) != null) {
           System.out.println("ID already exists, please try a different!");
@@ -97,7 +97,7 @@ public class Main {
       studentController.printStudentList();
 
       do {
-        System.out.println("Enter student ID: ");
+        System.out.print("Enter student ID: ");
         studentID = sc.nextLine();
         if (studentController.get(studentID) == null) {
           System.out.println("This student does not exist, please try a different!");
@@ -107,7 +107,7 @@ public class Main {
       vaccineController.printVaccineList();
 
       do {
-        System.out.println("Enter vaccine ID: ");
+        System.out.print("Enter vaccine ID: ");
         vaccineID = sc.nextLine();
         if (vaccineController.get(vaccineID) == null) {
           System.out.println("This vaccine does not exist, please try a different!");
@@ -190,7 +190,7 @@ public class Main {
     int idx;
 
     do {
-      System.out.println("Enter injection ID: ");
+      System.out.print("Enter injection ID: ");
       injectionID = sc.nextLine();
       injection = controller.get(injectionID);
       if (injection == null) {
@@ -278,7 +278,7 @@ public class Main {
     String injectionID = null, confirmation = null;
 
     do {
-      System.out.println("Enter injection ID: ");
+      System.out.print("Enter injection ID: ");
       injectionID = sc.nextLine();
       injection = controller.get(injectionID);
       if (injection == null) {
@@ -317,7 +317,7 @@ public class Main {
     studentController.printStudentList();
 
     do {
-      System.out.println("Enter student ID: ");
+      System.out.print("Enter student ID: ");
       studentID = sc.nextLine();
       if (studentController.get(studentID) == null) {
         System.out.println("This student does not exist, please try a different!");
