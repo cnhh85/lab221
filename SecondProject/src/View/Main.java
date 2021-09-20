@@ -46,10 +46,10 @@ public class Main {
           deleteInjection(controller, studentController, vaccineController);
           break;
         case 5:
-          // searchByStudentID();
+          searchByStudentID(controller, studentController, vaccineController);
           break;
         case 6:
-          // saveToFile();
+          controller.saveToFile();
           break;
         case 7:
           System.out.println("EXITING!");
@@ -97,8 +97,9 @@ public class Main {
         }
       } while (Utility.isEmpty(injectionID) || controller.get(injectionID) != null);
 
+      studentController.printStudentList();
+
       do {
-        studentController.printStudentList();
         System.out.println("Enter student ID: ");
         studentID = sc.nextLine();
         if (studentController.get(studentID) == null) {
@@ -106,8 +107,9 @@ public class Main {
         }
       } while (Utility.isEmpty(studentID) || studentController.get(studentID) == null);
 
+      vaccineController.printVaccineList();
+
       do {
-        vaccineController.printVaccineList();
         System.out.println("Enter vaccine ID: ");
         vaccineID = sc.nextLine();
         if (vaccineController.get(vaccineID) == null) {
@@ -305,6 +307,24 @@ public class Main {
     } else {
       System.out.println("Remove fail");
     }
+
+  }
+
+  private static void searchByStudentID(InjectionController controller, StudentController studentController,
+      VaccineController vaccineController) {
+    Scanner sc = new Scanner(System.in);
+
+    String studentID;
+
+    studentController.printStudentList();
+
+    do {
+      System.out.println("Enter student ID: ");
+      studentID = sc.nextLine();
+      if (studentController.get(studentID) == null) {
+        System.out.println("This student does not exist, please try a different!");
+      }
+    } while (Utility.isEmpty(studentID) || studentController.get(studentID) == null);
 
   }
 
