@@ -84,7 +84,7 @@ public class Main {
       Date firstDate = null;
       Date secondDate = null;
 
-      System.out.println("ADD AN INJECTION\n");
+      System.out.println("\n\nADD AN INJECTION\n");
 
       do {
         System.out.print("Enter injection ID: ");
