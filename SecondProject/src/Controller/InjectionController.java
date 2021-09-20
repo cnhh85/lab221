@@ -88,8 +88,8 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
   @Override
   public Injection create(String data) {
     String tokens[] = data.split("\\|");
-    return new Injection(tokens[0], tokens[1], tokens[2], tokens[3], Utility.handleParseDate(tokens[4]), tokens[5],
-        Utility.handleParseDate(tokens[6]));
+    return new Injection(tokens[0], tokens[1], tokens[2], tokens[3], Utility.handleParseDate(tokens[4]),
+        tokens[5] == "none" ? null : tokens[5], tokens[6] == "none" ? null : Utility.handleParseDate(tokens[6]));
   }
 
   public void saveToFile() {
@@ -99,9 +99,10 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
 
     for (Injection injection : this) {
       printWriter.println(injection.getInjectionID() + "|" + injection.getStudentID() + "|" + injection.getVaccineID()
-          + "|" + injection.getFirstPlace() + "|" + injection.getSecondPlace() + "|"
-          + dateFormat.format(injection.getFirstDate()) + "|" + dateFormat.format(injection.getSecondDate()));
-
+          + "|" + injection.getFirstPlace() + "|" + dateFormat.format(injection.getFirstDate()) + "|"
+          + injection.getSecondPlace() == null ? "none"
+              : injection.getSecondPlace() + "|" + injection.getSecondDate() == null ? "none"
+                  : dateFormat.format(injection.getSecondDate()));
     }
 
     close();
