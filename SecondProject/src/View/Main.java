@@ -1,5 +1,6 @@
 package View;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -34,7 +35,7 @@ public class Main {
       }
       switch (menuChoice) {
         case 1:
-          printInjection(controller);
+          controller.printInjectionList();
           break;
         case 2:
           addInjection(controller, studentController, vaccineController);
@@ -46,7 +47,7 @@ public class Main {
           deleteInjection(controller, studentController, vaccineController);
           break;
         case 5:
-          searchByStudentID(controller, studentController, vaccineController);
+          searchByStudentID(controller, studentController);
           break;
         case 6:
           controller.saveToFile();
@@ -69,10 +70,6 @@ public class Main {
     System.out.println("6. Store data to file");
     System.out.println("7. Exit");
     System.out.print("Your choice: ");
-  }
-
-  private static void printInjection(InjectionController controller) {
-    controller.printInjectionList();
   }
 
   private static void addInjection(InjectionController controller, StudentController studentController,
@@ -310,9 +307,10 @@ public class Main {
 
   }
 
-  private static void searchByStudentID(InjectionController controller, StudentController studentController,
-      VaccineController vaccineController) {
+  private static void searchByStudentID(InjectionController controller, StudentController studentController) {
     Scanner sc = new Scanner(System.in);
+
+    ArrayList<Injection> result = new ArrayList<Injection>();
 
     String studentID;
 
@@ -325,6 +323,23 @@ public class Main {
         System.out.println("This student does not exist, please try a different!");
       }
     } while (Utility.isEmpty(studentID) || studentController.get(studentID) == null);
+
+    result = controller.getInjectionByStudentID(studentID);
+
+    if (result == null) {
+      System.out.println("This student has not taken any injection");
+    } else {
+      System.out.println("\n\nSEARCHED INJECTIONS LIST:");
+      System.out.println(
+          "===================================================================================================");
+      System.out.format("|%13s|%12s|%12s|%15s|%12s|%15s|%12s|\n", "InjectionID", "StudentID", "VaccineID", "FirstPlace",
+          "FirstDate", "SecondPlace", "SecondDate");
+      System.out.println(
+          "---------------------------------------------------------------------------------------------------");
+      result.forEach(injection -> controller.printInjection(injection));
+      System.out.println(
+          "===================================================================================================\n\n");
+    }
 
   }
 
