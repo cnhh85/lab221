@@ -116,7 +116,7 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
 
   public void printInjectionList() {
     if (this.isEmpty()) {
-      System.out.println("There is no injection");
+      System.out.println("\n\nThere is no injection\n\n");
     } else {
       System.out.println("\n\nINJECTIONS LIST:");
       System.out.println(
