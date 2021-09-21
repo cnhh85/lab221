@@ -19,15 +19,10 @@ public class VaccineController extends ArrayList<Vaccine> implements FileConnect
   private PrintWriter printWriter = null;
 
   public VaccineController() {
-    if (this.isEmpty()) {
-      getAll();
-    }
+    getAll();
   }
 
   public Vaccine get(String vaccineID) {
-
-    getAll();
-
     for (Vaccine vaccine : this) {
       if (vaccine.getVaccineID().equals(vaccineID)) {
         return vaccine;

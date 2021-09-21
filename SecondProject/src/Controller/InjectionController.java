@@ -29,7 +29,6 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
 	}
 
 	public Injection get(String injectionID) {
-
 		for (Injection injection : this) {
 			if (injection.getInjectionID().equals(injectionID)) {
 				return injection;

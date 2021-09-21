@@ -20,15 +20,10 @@ public class StudentController extends ArrayList<Student> implements FileConnect
   private PrintWriter printWriter = null;
 
   public StudentController() {
-    if (this.isEmpty()) {
-      getAll();
-    }
+    getAll();
   }
 
   public Student get(String studentID) {
-
-    getAll();
-
     for (Student student : this) {
       if (student.getStudentID().equals(studentID)) {
         return student;
