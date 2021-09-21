@@ -123,20 +123,16 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
 	}
 
 	public void printInjectionList() {
-		if (this.isEmpty()) {
-			System.out.println("\n\nThere is no injection\n\n");
-		} else {
 			System.out.println("\n\nINJECTIONS LIST:");
 			System.out.println(
 					"===================================================================================================");
 			System.out.format("|%13s|%12s|%12s|%15s|%12s|%15s|%12s|\n", "InjectionID", "StudentID", "VaccineID", "FirstPlace",
 					"FirstDate", "SecondPlace", "SecondDate");
 			System.out.println(
-					"---------------------------------------------------------------------------------------------------");
+					"|-------------------------------------------------------------------------------------------------|");
 			this.forEach(injection -> printInjection(injection));
 			System.out.println(
 					"===================================================================================================\n\n");
-		}
 
 	}
 

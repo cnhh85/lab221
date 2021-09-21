@@ -20,7 +20,9 @@ public class StudentController extends ArrayList<Student> implements FileConnect
   private PrintWriter printWriter = null;
 
   public StudentController() {
-    getAll();
+    if (this.isEmpty()) {
+      getAll();
+    }
   }
 
   public Student get(String studentID) {
@@ -98,7 +100,7 @@ public class StudentController extends ArrayList<Student> implements FileConnect
     System.out.println("\n\nSTUDENT LIST:");
     System.out.println("=============================================");
     System.out.format("|%12s|%30s|\n", "StudentID", "StudentName");
-    System.out.println("---------------------------------------------");
+    System.out.println("|-------------------------------------------|");
     this.forEach(student -> printStudent(student));
     System.out.println("=============================================\n\n");
   }

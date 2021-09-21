@@ -19,7 +19,9 @@ public class VaccineController extends ArrayList<Vaccine> implements FileConnect
   private PrintWriter printWriter = null;
 
   public VaccineController() {
-    getAll();
+    if (this.isEmpty()) {
+      getAll();
+    }
   }
 
   public Vaccine get(String vaccineID) {
@@ -96,7 +98,7 @@ public class VaccineController extends ArrayList<Vaccine> implements FileConnect
     System.out.println("\n\nVACCINE LIST:");
     System.out.println("=============================================");
     System.out.format("|%12s|%30s|\n", "VaccineID", "VaccineName");
-    System.out.println("---------------------------------------------");
+    System.out.println("|-------------------------------------------|");
     this.forEach(vaccine -> printVaccine(vaccine));
     System.out.println("=============================================\n\n");
   }

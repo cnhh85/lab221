@@ -30,12 +30,12 @@ public class Main {
         printMenu();
         menuChoice = Integer.parseInt(scanner.nextLine());
       } catch (NumberFormatException e) {
-        System.out.println("Invalid choice!" + "\n\n");
+        System.out.println("\n\nInvalid choice!\n\n");
         continue;
       }
       switch (menuChoice) {
         case 1:
-          controller.printInjectionList();
+          showInjectionInformation(controller);
           break;
         case 2:
           addInjection(controller, studentController, vaccineController);
@@ -50,7 +50,7 @@ public class Main {
           searchByStudentID(controller, studentController);
           break;
         case 6:
-          controller.saveToFile();
+          saveToFile(controller);
           break;
         case 7:
           System.out.println("EXITING!");
@@ -70,6 +70,14 @@ public class Main {
     System.out.println("6. Store data to file");
     System.out.println("7. Exit");
     System.out.print("Your choice: ");
+  }
+
+  private static void showInjectionInformation(InjectionController controller) {
+    if (controller.isEmpty()) {
+      System.out.println("\n\nThere is no injection\n\n");
+    } else {
+      controller.printInjectionList();
+    }
   }
 
   private static void addInjection(InjectionController controller, StudentController studentController,
@@ -180,36 +188,67 @@ public class Main {
 
   private static void updateInjection(InjectionController controller, StudentController studentController,
       VaccineController vaccineController) {
+    if (controller.isEmpty()) {
+      System.out.println("\n\nThere is no injection\n\n");
+    } else {
+      Scanner sc = new Scanner(System.in);
 
-    Scanner sc = new Scanner(System.in);
+      Injection injection = null;
+      Date secondDate = null;
 
-    Injection injection = null;
-    Date secondDate = null;
+      String injectionID = null, keepUpdate = null, secondPlace, secondDateInput;
+      int idx;
 
-    String injectionID = null, keepUpdate = null, secondPlace, secondDateInput;
-    int idx;
-
-    do {
-      System.out.print("Enter injection ID: ");
-      injectionID = sc.nextLine();
-      injection = controller.get(injectionID);
-      if (injection == null) {
-        System.out.println("This injection does not exist, please try a different!");
-      }
-    } while (Utility.isEmpty(injectionID) || injection == null);
-
-    idx = controller.indexOf(injection);
-
-    if (injection.getSecondPlace() != null) {
       do {
-        System.out.print("This student has already completed 2 injections, do you want to continue update (Y/N): ");
-        keepUpdate = sc.nextLine();
-        if (!keepUpdate.matches("[YyNn]")) {
-          keepUpdate = null;
+        System.out.print("Enter injection ID: ");
+        injectionID = sc.nextLine();
+        injection = controller.get(injectionID);
+        if (injection == null) {
+          System.out.println("This injection does not exist, please try a different!");
         }
-      } while (keepUpdate == null);
+      } while (Utility.isEmpty(injectionID) || injection == null);
 
-      if (keepUpdate.toUpperCase().equals("Y")) {
+      idx = controller.indexOf(injection);
+
+      if (injection.getSecondPlace() != null) {
+        do {
+          System.out.print("This student has already completed 2 injections, do you want to continue update (Y/N): ");
+          keepUpdate = sc.nextLine();
+          if (!keepUpdate.matches("[YyNn]")) {
+            keepUpdate = null;
+          }
+        } while (keepUpdate == null);
+
+        if (keepUpdate.toUpperCase().equals("Y")) {
+          controller.printInjection(injection);
+
+          do {
+            System.out.print("Enter second place: ");
+            secondPlace = sc.nextLine();
+          } while (Utility.isEmpty(secondPlace));
+
+          injection.setSecondPlace(secondPlace);
+
+          do {
+            System.out.print("Enter second date (dd/mm/yyyy): ");
+            secondDateInput = sc.nextLine();
+            if (!secondDateInput.matches("^\\d{1,2}/\\d{1,2}/\\d{4}$")) {
+              System.out.println("Invalid date format");
+              continue;
+            }
+            secondDate = Utility.handleParseDate(secondDateInput);
+            if (secondDate == null) {
+              System.out.println("Date not exist");
+            }
+          } while (secondDate == null || !Utility.isValidSecondDate(injection.getFirstDate(), secondDate));
+
+          injection.setSecondDate(secondDate);
+
+          controller.set(idx, injection);
+
+        }
+
+      } else {
         controller.printInjection(injection);
 
         do {
@@ -237,110 +276,113 @@ public class Main {
         controller.set(idx, injection);
 
       }
-
-    } else {
-      controller.printInjection(injection);
-
-      do {
-        System.out.print("Enter second place: ");
-        secondPlace = sc.nextLine();
-      } while (Utility.isEmpty(secondPlace));
-
-      injection.setSecondPlace(secondPlace);
-
-      do {
-        System.out.print("Enter second date (dd/mm/yyyy): ");
-        secondDateInput = sc.nextLine();
-        if (!secondDateInput.matches("^\\d{1,2}/\\d{1,2}/\\d{4}$")) {
-          System.out.println("Invalid date format");
-          continue;
-        }
-        secondDate = Utility.handleParseDate(secondDateInput);
-        if (secondDate == null) {
-          System.out.println("Date not exist");
-        }
-      } while (secondDate == null || !Utility.isValidSecondDate(injection.getFirstDate(), secondDate));
-
-      injection.setSecondDate(secondDate);
-
-      controller.set(idx, injection);
-
     }
 
   }
 
   public static void deleteInjection(InjectionController controller, StudentController studentController,
       VaccineController vaccineController) {
-    Scanner sc = new Scanner(System.in);
-
-    Injection injection = null;
-
-    String injectionID = null, confirmation = null;
-
-    do {
-      System.out.print("Enter injection ID: ");
-      injectionID = sc.nextLine();
-      injection = controller.get(injectionID);
-      if (injection == null) {
-        System.out.println("This injection does not exist, please try a different!");
-      }
-    } while (Utility.isEmpty(injectionID) || injection == null);
-
-    System.out.println();
-    controller.printInjection(injection);
-    System.out.println();
-
-    do {
-      System.out.print("Do you want to delete this injection (Y/N): ");
-      confirmation = sc.nextLine();
-      if (!confirmation.matches("[YyNn]")) {
-        confirmation = null;
-      }
-    } while (confirmation == null);
-
-    if (confirmation.toUpperCase().equals("Y")) {
-      controller.remove(injection);
-      System.out.println("Remove successfully");
+    if (controller.isEmpty()) {
+      System.out.println("\n\nThere is no injection\n\n");
     } else {
-      System.out.println("Remove fail");
+      Scanner sc = new Scanner(System.in);
+
+      Injection injection = null;
+
+      String injectionID = null, confirmation = null;
+
+      do {
+        System.out.print("Enter injection ID: ");
+        injectionID = sc.nextLine();
+        injection = controller.get(injectionID);
+        if (injection == null) {
+          System.out.println("This injection does not exist, please try a different!");
+        }
+      } while (Utility.isEmpty(injectionID) || injection == null);
+
+      System.out.println();
+      controller.printInjection(injection);
+      System.out.println();
+
+      do {
+        System.out.print("Do you want to delete this injection (Y/N): ");
+        confirmation = sc.nextLine();
+        if (!confirmation.matches("[YyNn]")) {
+          confirmation = null;
+        }
+      } while (confirmation == null);
+
+      if (confirmation.toUpperCase().equals("Y")) {
+        controller.remove(injection);
+        System.out.println("Remove successfully");
+      } else {
+        System.out.println("Remove fail");
+      }
+
     }
 
   }
 
   private static void searchByStudentID(InjectionController controller, StudentController studentController) {
-    Scanner sc = new Scanner(System.in);
-
-    ArrayList<Injection> result = new ArrayList<Injection>();
-
-    String studentID;
-
-    studentController.printStudentList();
-
-    do {
-      System.out.print("Enter student ID: ");
-      studentID = sc.nextLine();
-      if (studentController.get(studentID) == null) {
-        System.out.println("This student does not exist, please try a different!");
-      }
-    } while (Utility.isEmpty(studentID) || studentController.get(studentID) == null);
-
-    result = controller.getInjectionByStudentID(studentID);
-
-    if (result == null) {
-      System.out.println("This student has not taken any injection");
+    if (controller.isEmpty()) {
+      System.out.println("\n\nThere is no injection\n\n");
     } else {
-      System.out.println("\n\nSEARCHED INJECTIONS LIST:");
-      System.out.println(
-          "===================================================================================================");
-      System.out.format("|%13s|%12s|%12s|%15s|%12s|%15s|%12s|\n", "InjectionID", "StudentID", "VaccineID", "FirstPlace",
-          "FirstDate", "SecondPlace", "SecondDate");
-      System.out.println(
-          "---------------------------------------------------------------------------------------------------");
-      result.forEach(injection -> controller.printInjection(injection));
-      System.out.println(
-          "===================================================================================================\n\n");
+
+      Scanner sc = new Scanner(System.in);
+
+      ArrayList<Injection> result = new ArrayList<Injection>();
+
+      String studentID;
+
+      studentController.printStudentList();
+
+      do {
+        System.out.print("Enter student ID: ");
+        studentID = sc.nextLine();
+        if (studentController.get(studentID) == null) {
+          System.out.println("This student does not exist, please try a different!");
+        }
+      } while (Utility.isEmpty(studentID) || studentController.get(studentID) == null);
+
+      result = controller.getInjectionByStudentID(studentID);
+
+      if (result == null) {
+        System.out.println("This student has not taken any injection");
+      } else {
+        System.out.println("\n\nSEARCHED INJECTIONS LIST:");
+        System.out.println(
+            "===================================================================================================");
+        System.out.format("|%13s|%12s|%12s|%15s|%12s|%15s|%12s|\n", "InjectionID", "StudentID", "VaccineID",
+            "FirstPlace", "FirstDate", "SecondPlace", "SecondDate");
+        System.out.println(
+            "---------------------------------------------------------------------------------------------------");
+        result.forEach(injection -> controller.printInjection(injection));
+        System.out.println(
+            "===================================================================================================\n\n");
+      }
+
     }
 
   }
 
+  private static void saveToFile(InjectionController controller) {
+    if (controller.isEmpty()) {
+      Scanner sc = new Scanner(System.in);
+      String confirmation = null;
+      do {
+        System.out.println("\n\nThere is no injection, do you want to save an empty file (Y/N): \n\n");
+        confirmation = sc.nextLine();
+        if (!confirmation.matches("[YyNn]")) {
+          confirmation = null;
+        }
+      } while (confirmation == null);
+
+      if (confirmation.toUpperCase().equals("Y")) {
+        controller.saveToFile();
+      }
+    } else {
+      controller.saveToFile();
+    }
+
+  }
 }
