@@ -26,7 +26,7 @@ public class Main {
           System.out.println();
           break;
         case 2:
-          manager.searchFood();
+          manager.searchFoodByPlace();
           System.out.println();
           break;
         case 3:
@@ -54,7 +54,7 @@ public class Main {
   private static void PrintInfo() {
     System.out.println("Select the options below:");
     System.out.println("1. Add a new food");
-    System.out.println("2. Search a food by name");
+    System.out.println("2. Search a food by place");
     System.out.println("3. Remove the food by ID");
     System.out.println("4. Print the food list in the descending order of expired date");
     System.out.println("5. Save to file and exit");
