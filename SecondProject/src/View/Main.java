@@ -115,7 +115,7 @@ public class Main {
         } else if (studentController.get(studentID.trim()) == null) {
           System.out.println("This student does not exist, please try a different!");
         } else if (controller.getByStudentID(studentID.trim()) != null) {
-          System.out.println("This student already has an injection, please try a different!");
+          System.out.println("This student already has an injection record, please try a different!");
         }
       } while (Utility.isEmpty(studentID) || studentController.get(studentID.trim()) == null
           || controller.getByStudentID(studentID.trim()) != null);
@@ -171,7 +171,8 @@ public class Main {
       } while (secondConfirmation == null);
 
       if (!secondConfirmation.toUpperCase().equals("Y")) {
-        injection = new Injection(injectionID.trim(), studentID.trim(), vaccineID.trim(), firstPlace.trim(), firstDate);
+        injection = new Injection(injectionID.trim().toUpperCase(), studentID.trim().toUpperCase(),
+            vaccineID.trim().toUpperCase(), firstPlace.trim(), firstDate);
       } else {
         do {
           System.out.print("Enter second place: ");
@@ -197,8 +198,8 @@ public class Main {
           }
         } while (secondDate == null || !Utility.isValidSecondDate(firstDate, secondDate));
 
-        injection = new Injection(injectionID.trim(), studentID.trim(), vaccineID.trim(), firstPlace.trim(), firstDate,
-            secondPlace.trim(), secondDate);
+        injection = new Injection(injectionID.trim().toUpperCase(), studentID.trim().toUpperCase(),
+            vaccineID.trim().toUpperCase(), firstPlace.trim(), firstDate, secondPlace.trim(), secondDate);
 
       }
 
@@ -234,18 +235,17 @@ public class Main {
       do {
         System.out.print("\n\nEnter injection ID: ");
         injectionID = sc.nextLine();
-
+        injection = controller.get(injectionID.trim());
         if (Utility.isEmpty(injectionID)) {
           System.out.println("String cannot be empty");
         } else if (injection == null) {
-          injection = controller.get(injectionID);
           System.out.println("This injection does not exist, please try a different!");
         }
       } while (Utility.isEmpty(injectionID) || injection == null);
 
       idx = controller.indexOf(injection);
 
-      if (injection.getSecondPlace() == null) {
+      if (injection.getSecondDate() == null) {
         controller.printInjection(injection);
 
         do {
@@ -299,14 +299,13 @@ public class Main {
       String injectionID = null, confirmation = null;
 
       do {
-        System.out.print("Enter injection ID: ");
+        System.out.print("\n\nEnter injection ID: ");
         injectionID = sc.nextLine();
-
+        injection = controller.get(injectionID.trim());
         if (Utility.isEmpty(injectionID)) {
           System.out.println("String cannot be empty");
         } else if (injection == null) {
-          injection = controller.get(injectionID.trim());
-          System.out.println("This injection does not exist, please try a different!");
+          System.out.println("This injection does not exist, please try a different!\n");
         }
       } while (Utility.isEmpty(injectionID) || injection == null);
 
@@ -315,7 +314,7 @@ public class Main {
       System.out.println();
 
       do {
-        System.out.print("Do you want to delete this injection (Y/N): ");
+        System.out.print("\n\nDo you want to delete this injection (Y/N): ");
         confirmation = sc.nextLine();
 
         if (!confirmation.matches("[YyNn]")) {
@@ -326,9 +325,9 @@ public class Main {
       if (confirmation.toUpperCase().equals("Y")) {
         controller.remove(injection);
 
-        System.out.println("Remove successfully");
+        System.out.println("\nRemove successfully\n\n");
       } else {
-        System.out.println("Remove fail");
+        System.out.println("\nRemove fail\n\n");
       }
 
     }
@@ -349,21 +348,22 @@ public class Main {
       studentController.printStudentList();
 
       do {
-        System.out.print("Enter student ID: ");
+        System.out.print("\nEnter student ID: ");
         studentID = sc.nextLine();
 
         if (Utility.isEmpty(studentID)) {
-          System.out.println("String cannot be empty");
+          System.out.println("\nString cannot be empty\n");
+          continue;
         }
         if (studentController.get(studentID.trim()) == null) {
-          System.out.println("This student does not exist, please try a different!");
+          System.out.println("\nThis student does not exist, please try a different!\n");
         }
       } while (Utility.isEmpty(studentID) || studentController.get(studentID.trim()) == null);
 
       injection = controller.getByStudentID(studentID.trim());
 
       if (injection == null) {
-        System.out.println("This student has not taken any injection");
+        System.out.println("\nThis student has not taken any injection\n\n");
       } else {
         System.out.println("\n\nFOUND INJECTION: ");
         System.out.format("|%13s|%12s|%12s|%15s|%12s|%15s|%12s|\n", "InjectionID", "StudentID", "VaccineID",
@@ -372,6 +372,7 @@ public class Main {
             "---------------------------------------------------------------------------------------------------");
 
         controller.printInjection(injection);
+        System.out.println("\n\n");
       }
 
     }
