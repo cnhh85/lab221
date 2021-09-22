@@ -86,7 +86,7 @@ public class VaccineController extends ArrayList<Vaccine> implements FileConnect
   }
 
   private void printVaccine(Vaccine vaccine) {
-    System.out.format("|%12s|%15s|\n", vaccine.getVaccineID(), vaccine.getName());
+    System.out.format("|%12s|%30s|\n", vaccine.getVaccineID(), vaccine.getName());
   }
 
   public void printVaccineList() {
