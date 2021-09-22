@@ -145,18 +145,4 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
 
 	}
 
-	public ArrayList<Injection> getInjectionByStudentID(String studentID) {
-		if (this.isEmpty()) {
-			return null;
-		} else {
-			ArrayList<Injection> result = new ArrayList<Injection>();
-			for (Injection injection : this) {
-				if (injection.getStudentID().equals(studentID)) {
-					result.add(injection);
-				}
-			}
-			return result;
-		}
-	}
-
 }

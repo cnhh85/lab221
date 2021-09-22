@@ -97,6 +97,7 @@ public class Main {
       do {
         System.out.print("Enter injection ID: ");
         injectionID = sc.nextLine();
+
         if (controller.get(injectionID) != null) {
           System.out.println("ID already exists, please try a different!");
         }
@@ -110,17 +111,18 @@ public class Main {
 
         if (studentController.get(studentID) == null) {
           System.out.println("This student does not exist, please try a different!");
-        } else if (controller.getByStudentID(studentID) == null) {
+        } else if (controller.getByStudentID(studentID) != null) {
           System.out.println("This student already has an injection, please try a different!");
         }
       } while (Utility.isEmpty(studentID) || studentController.get(studentID) == null
-          || controller.getByStudentID(studentID) == null);
+          || controller.getByStudentID(studentID) != null);
 
       vaccineController.printVaccineList();
 
       do {
         System.out.print("Enter vaccine ID: ");
         vaccineID = sc.nextLine();
+
         if (vaccineController.get(vaccineID) == null) {
           System.out.println("This vaccine does not exist, please try a different!");
         }
@@ -129,11 +131,13 @@ public class Main {
       do {
         System.out.print("Enter first place: ");
         firstPlace = sc.nextLine();
+
       } while (Utility.isEmpty(firstPlace));
 
       do {
         System.out.print("Enter first date (dd/mm/yyyy): ");
         firstDateInput = sc.nextLine();
+
         if (!firstDateInput.matches("^\\d{1,2}/\\d{1,2}/\\d{4}$")) {
           System.out.println("Invalid date format");
           continue;
@@ -147,6 +151,7 @@ public class Main {
       do {
         System.out.print("Do you want to add second information (Y/N): ");
         secondConfirmation = sc.nextLine();
+
         if (!secondConfirmation.matches("[YyNn]")) {
           secondConfirmation = null;
         }
@@ -158,11 +163,13 @@ public class Main {
         do {
           System.out.print("Enter second place: ");
           secondPlace = sc.nextLine();
+
         } while (Utility.isEmpty(secondPlace));
 
         do {
           System.out.print("Enter second date (dd/mm/yyyy): ");
           secondDateInput = sc.nextLine();
+
           if (!secondDateInput.matches("^\\d{1,2}/\\d{1,2}/\\d{4}$")) {
             System.out.println("Invalid date format");
             continue;
@@ -183,6 +190,7 @@ public class Main {
       do {
         System.out.print("Do you want to add another injection (Y/N): ");
         continueConfirmation = sc.nextLine();
+
         if (!continueConfirmation.matches("[YyNn]")) {
           continueConfirmation = null;
         }
@@ -206,6 +214,7 @@ public class Main {
       do {
         System.out.print("Enter injection ID: ");
         injectionID = sc.nextLine();
+
         injection = controller.get(injectionID);
         if (injection == null) {
           System.out.println("This injection does not exist, please try a different!");
@@ -218,6 +227,7 @@ public class Main {
         do {
           System.out.print("This student has already completed 2 injections, do you want to continue update (Y/N): ");
           keepUpdate = sc.nextLine();
+
           if (!keepUpdate.matches("[YyNn]")) {
             keepUpdate = null;
           }
@@ -236,6 +246,7 @@ public class Main {
           do {
             System.out.print("Enter second date (dd/mm/yyyy): ");
             secondDateInput = sc.nextLine();
+
             if (!secondDateInput.matches("^\\d{1,2}/\\d{1,2}/\\d{4}$")) {
               System.out.println("Invalid date format");
               continue;
@@ -258,6 +269,7 @@ public class Main {
         do {
           System.out.print("Enter second place: ");
           secondPlace = sc.nextLine();
+
         } while (Utility.isEmpty(secondPlace));
 
         injection.setSecondPlace(secondPlace);
@@ -265,6 +277,7 @@ public class Main {
         do {
           System.out.print("Enter second date (dd/mm/yyyy): ");
           secondDateInput = sc.nextLine();
+
           if (!secondDateInput.matches("^\\d{1,2}/\\d{1,2}/\\d{4}$")) {
             System.out.println("Invalid date format");
             continue;
@@ -298,6 +311,7 @@ public class Main {
       do {
         System.out.print("Enter injection ID: ");
         injectionID = sc.nextLine();
+
         injection = controller.get(injectionID);
         if (injection == null) {
           System.out.println("This injection does not exist, please try a different!");
@@ -311,6 +325,7 @@ public class Main {
       do {
         System.out.print("Do you want to delete this injection (Y/N): ");
         confirmation = sc.nextLine();
+
         if (!confirmation.matches("[YyNn]")) {
           confirmation = null;
         }
@@ -318,6 +333,7 @@ public class Main {
 
       if (confirmation.toUpperCase().equals("Y")) {
         controller.remove(injection);
+
         System.out.println("Remove successfully");
       } else {
         System.out.println("Remove fail");
@@ -334,7 +350,7 @@ public class Main {
 
       Scanner sc = new Scanner(System.in);
 
-      ArrayList<Injection> result = new ArrayList<Injection>();
+      Injection injection = null;
 
       String studentID;
 
@@ -343,26 +359,24 @@ public class Main {
       do {
         System.out.print("Enter student ID: ");
         studentID = sc.nextLine();
+
         if (studentController.get(studentID) == null) {
           System.out.println("This student does not exist, please try a different!");
         }
       } while (Utility.isEmpty(studentID) || studentController.get(studentID) == null);
 
-      result = controller.getInjectionByStudentID(studentID);
+      injection = controller.getByStudentID(studentID);
 
-      if (result == null) {
+      if (injection == null) {
         System.out.println("This student has not taken any injection");
       } else {
-        System.out.println("\n\nSEARCHED INJECTIONS LIST:");
-        System.out.println(
-            "===================================================================================================");
+        System.out.println("\n\nFOUND INJECTION: ");
         System.out.format("|%13s|%12s|%12s|%15s|%12s|%15s|%12s|\n", "InjectionID", "StudentID", "VaccineID",
             "FirstPlace", "FirstDate", "SecondPlace", "SecondDate");
         System.out.println(
             "---------------------------------------------------------------------------------------------------");
-        result.forEach(injection -> controller.printInjection(injection));
-        System.out.println(
-            "===================================================================================================\n\n");
+
+        controller.printInjection(injection);
       }
 
     }
@@ -376,6 +390,7 @@ public class Main {
       do {
         System.out.print("\n\nThere is no injection, do you want to save an empty file (Y/N): ");
         confirmation = sc.nextLine();
+        
         if (!confirmation.matches("[YyNn]")) {
           confirmation = null;
         }
