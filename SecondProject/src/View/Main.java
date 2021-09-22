@@ -22,7 +22,7 @@ public class Main {
 
     System.out.println("=================================================================");
     System.out.println("COVID-19 VACCINE MANAGEMENT BY @ SE160050 - CAO NGUYEN HOANG HIEP");
-    System.out.println("=================================================================" + "\n\n");
+    System.out.println("=================================================================");
     int menuChoice = 0;
     Scanner scanner = new Scanner(System.in);
     do {
@@ -62,7 +62,7 @@ public class Main {
   }
 
   private static void printMenu() {
-    System.out.println("1. Show injection information");
+    System.out.println("\n\n1. Show injection information");
     System.out.println("2. Add an injection");
     System.out.println("3. Update injection information");
     System.out.println("4. Delete injection");
@@ -390,7 +390,7 @@ public class Main {
       do {
         System.out.print("\n\nThere is no injection, do you want to save an empty file (Y/N): ");
         confirmation = sc.nextLine();
-        
+
         if (!confirmation.matches("[YyNn]")) {
           confirmation = null;
         }
