@@ -24,7 +24,7 @@ public class VaccineController extends ArrayList<Vaccine> implements FileConnect
 
   public Vaccine get(String vaccineID) {
     for (Vaccine vaccine : this) {
-      if (vaccine.getVaccineID().equals(vaccineID)) {
+      if (vaccine.getVaccineID().equals(vaccineID.toUpperCase())) {
         return vaccine;
       }
     }

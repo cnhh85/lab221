@@ -171,7 +171,8 @@ public class Main {
       } while (secondConfirmation == null);
 
       if (!secondConfirmation.toUpperCase().equals("Y")) {
-        injection = new Injection(injectionID.trim(), studentID.trim(), vaccineID.trim(), firstPlace.trim(), firstDate);
+        injection = new Injection(injectionID.trim().toUpperCase(), studentID.trim().toUpperCase(),
+            vaccineID.trim().toUpperCase(), firstPlace.trim(), firstDate);
       } else {
         do {
           System.out.print("Enter second place: ");
@@ -197,13 +198,13 @@ public class Main {
           }
         } while (secondDate == null || !Utility.isValidSecondDate(firstDate, secondDate));
 
-        injection = new Injection(injectionID.trim(), studentID.trim(), vaccineID.trim(), firstPlace.trim(), firstDate,
-            secondPlace.trim(), secondDate);
+        injection = new Injection(injectionID.trim().toUpperCase(), studentID.trim().toUpperCase(),
+            vaccineID.trim().toUpperCase(), firstPlace.trim(), firstDate, secondPlace.trim(), secondDate);
 
       }
 
       controller.add(injection);
-      System.out.println("Successfully added injection " + injectionID.trim());
+      System.out.println("Successfully added injection " + injectionID.trim().toUpperCase());
 
       do {
         System.out.print("Do you want to add another injection (Y/N): ");
