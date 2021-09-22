@@ -203,7 +203,7 @@ public class Main {
       }
 
       controller.add(injection);
-      System.out.println("Successfully added injection " + injectionID);
+      System.out.println("Successfully added injection " + injectionID.trim());
 
       do {
         System.out.print("Do you want to add another injection (Y/N): ");
@@ -243,51 +243,7 @@ public class Main {
 
       idx = controller.indexOf(injection);
 
-      if (injection.getSecondPlace() != null) {
-        do {
-          System.out.print("This student has already completed 2 injections, do you want to continue update (Y/N): ");
-          keepUpdate = sc.nextLine();
-
-          if (!keepUpdate.matches("[YyNn]")) {
-            keepUpdate = null;
-          }
-        } while (keepUpdate == null);
-
-        if (keepUpdate.toUpperCase().equals("Y")) {
-          controller.printInjection(injection);
-
-          do {
-            System.out.print("Enter second place: ");
-            secondPlace = sc.nextLine();
-
-            if (Utility.isEmpty(secondPlace)) {
-              System.out.println("String cannot be empty");
-            }
-          } while (Utility.isEmpty(secondPlace));
-
-          injection.setSecondPlace(secondPlace.trim());
-
-          do {
-            System.out.print("Enter second date (dd/mm/yyyy): ");
-            secondDateInput = sc.nextLine();
-
-            if (!secondDateInput.matches("^\\d{1,2}/\\d{1,2}/\\d{4}$")) {
-              System.out.println("Invalid date format");
-              continue;
-            }
-            secondDate = Utility.handleParseDate(secondDateInput);
-            if (secondDate == null) {
-              System.out.println("Date not exist");
-            }
-          } while (secondDate == null || !Utility.isValidSecondDate(injection.getFirstDate(), secondDate));
-
-          injection.setSecondDate(secondDate);
-
-          controller.set(idx, injection);
-
-        }
-
-      } else {
+      if (injection.getSecondPlace() == null) {
         controller.printInjection(injection);
 
         do {
@@ -320,6 +276,8 @@ public class Main {
 
         controller.set(idx, injection);
 
+      } else {
+        System.out.print("This student has already completed 2 injections");
       }
     }
 
@@ -339,7 +297,7 @@ public class Main {
       do {
         System.out.print("Enter injection ID: ");
         injectionID = sc.nextLine();
-        
+
         if (Utility.isEmpty(injectionID)) {
           System.out.println("String cannot be empty");
         } else if (injection == null) {
