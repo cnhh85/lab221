@@ -45,6 +45,11 @@ public class Utility {
     }
   }
 
+  public static Date isValidFirstDate(Date date) {
+    Date today = new Date();
+    return date.after(today) ? null : date;
+  }
+
   public static boolean isEmpty(String string) {
     if (string.equals("")) {
       return true;
