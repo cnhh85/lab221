@@ -30,7 +30,7 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
 
 	public Injection get(String injectionID) {
 		for (Injection injection : this) {
-			if (injection.getInjectionID().equals(injectionID.toUpperCase())) {
+			if (injection.getInjectionID().equals(injectionID)) {
 				return injection;
 			}
 		}
@@ -40,7 +40,7 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
 
 	public Injection getByStudentID(String studentID) {
 		for (Injection injection : this) {
-			if (injection.getStudentID().equals(studentID.toUpperCase())) {
+			if (injection.getStudentID().equals(studentID)) {
 				return injection;
 			}
 		}

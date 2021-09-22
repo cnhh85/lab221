@@ -25,7 +25,7 @@ public class StudentController extends ArrayList<Student> implements FileConnect
 
   public Student get(String studentID) {
     for (Student student : this) {
-      if (student.getStudentID().equals(studentID.toUpperCase())) {
+      if (student.getStudentID().equals(studentID)) {
         return student;
       }
     }

@@ -171,8 +171,7 @@ public class Main {
       } while (secondConfirmation == null);
 
       if (!secondConfirmation.toUpperCase().equals("Y")) {
-        injection = new Injection(injectionID.trim().toUpperCase(), studentID.trim().toUpperCase(),
-            vaccineID.trim().toUpperCase(), firstPlace.trim(), firstDate);
+        injection = new Injection(injectionID.trim(), studentID.trim(), vaccineID.trim(), firstPlace.trim(), firstDate);
       } else {
         do {
           System.out.print("Enter second place: ");
@@ -198,8 +197,8 @@ public class Main {
           }
         } while (secondDate == null || !Utility.isValidSecondDate(firstDate, secondDate));
 
-        injection = new Injection(injectionID.trim().toUpperCase(), studentID.trim().toUpperCase(),
-            vaccineID.trim().toUpperCase(), firstPlace.trim(), firstDate, secondPlace.trim(), secondDate);
+        injection = new Injection(injectionID.trim(), studentID.trim(), vaccineID.trim(), firstPlace.trim(), firstDate,
+            secondPlace.trim(), secondDate);
 
       }
 
@@ -233,13 +232,13 @@ public class Main {
       int idx;
 
       do {
-        System.out.print("Enter injection ID: ");
+        System.out.print("\n\nEnter injection ID: ");
         injectionID = sc.nextLine();
 
         if (Utility.isEmpty(injectionID)) {
           System.out.println("String cannot be empty");
         } else if (injection == null) {
-          injection = controller.get(injectionID.trim());
+          injection = controller.get(injectionID);
           System.out.println("This injection does not exist, please try a different!");
         }
       } while (Utility.isEmpty(injectionID) || injection == null);
@@ -279,8 +278,10 @@ public class Main {
 
         controller.set(idx, injection);
 
+        System.out.println("Update successfully\n\n");
+
       } else {
-        System.out.print("This student has already completed 2 injections");
+        System.out.print("This student has already completed 2 injections\n\n");
       }
     }
 
