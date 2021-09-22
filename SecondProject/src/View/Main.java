@@ -22,7 +22,7 @@ public class Main {
 
     System.out.println("=================================================================");
     System.out.println("COVID-19 VACCINE MANAGEMENT BY @ SE160050 - CAO NGUYEN HOANG HIEP");
-    System.out.println("=================================================================");
+    System.out.println("=================================================================\n\n");
     int menuChoice = 0;
     Scanner scanner = new Scanner(System.in);
     do {
@@ -62,7 +62,7 @@ public class Main {
   }
 
   private static void printMenu() {
-    System.out.println("\n\n1. Show injection information");
+    System.out.println("1. Show injection information");
     System.out.println("2. Add an injection");
     System.out.println("3. Update injection information");
     System.out.println("4. Delete injection");
@@ -98,7 +98,9 @@ public class Main {
         System.out.print("Enter injection ID: ");
         injectionID = sc.nextLine();
 
-        if (controller.get(injectionID) != null) {
+        if (Utility.isEmpty(injectionID)) {
+          System.out.println("String cannot be empty");
+        } else if (controller.get(injectionID) != null) {
           System.out.println("ID already exists, please try a different!");
         }
       } while (Utility.isEmpty(injectionID) || controller.get(injectionID) != null);
@@ -108,8 +110,9 @@ public class Main {
       do {
         System.out.print("Enter student ID: ");
         studentID = sc.nextLine();
-
-        if (studentController.get(studentID) == null) {
+        if (Utility.isEmpty(studentID)) {
+          System.out.println("String cannot be empty");
+        } else if (studentController.get(studentID) == null) {
           System.out.println("This student does not exist, please try a different!");
         } else if (controller.getByStudentID(studentID) != null) {
           System.out.println("This student already has an injection, please try a different!");
@@ -122,8 +125,9 @@ public class Main {
       do {
         System.out.print("Enter vaccine ID: ");
         vaccineID = sc.nextLine();
-
-        if (vaccineController.get(vaccineID) == null) {
+        if (Utility.isEmpty(vaccineID)) {
+          System.out.println("String cannot be empty");
+        } else if (vaccineController.get(vaccineID) == null) {
           System.out.println("This vaccine does not exist, please try a different!");
         }
       } while (Utility.isEmpty(vaccineID) || vaccineController.get(vaccineID) == null);
@@ -131,6 +135,10 @@ public class Main {
       do {
         System.out.print("Enter first place: ");
         firstPlace = sc.nextLine();
+
+        if (Utility.isEmpty(firstPlace)) {
+          System.out.println("String cannot be empty");
+        }
 
       } while (Utility.isEmpty(firstPlace));
 
@@ -163,6 +171,10 @@ public class Main {
         do {
           System.out.print("Enter second place: ");
           secondPlace = sc.nextLine();
+
+          if (Utility.isEmpty(secondPlace)) {
+            System.out.println("String cannot be empty");
+          }
 
         } while (Utility.isEmpty(secondPlace));
 
@@ -216,7 +228,9 @@ public class Main {
         injectionID = sc.nextLine();
 
         injection = controller.get(injectionID);
-        if (injection == null) {
+        if (Utility.isEmpty(injectionID)) {
+          System.out.println("String cannot be empty");
+        } else if (injection == null) {
           System.out.println("This injection does not exist, please try a different!");
         }
       } while (Utility.isEmpty(injectionID) || injection == null);
@@ -239,6 +253,10 @@ public class Main {
           do {
             System.out.print("Enter second place: ");
             secondPlace = sc.nextLine();
+
+            if (Utility.isEmpty(secondPlace)) {
+              System.out.println("String cannot be empty");
+            }
           } while (Utility.isEmpty(secondPlace));
 
           injection.setSecondPlace(secondPlace);
@@ -269,6 +287,10 @@ public class Main {
         do {
           System.out.print("Enter second place: ");
           secondPlace = sc.nextLine();
+
+          if (Utility.isEmpty(secondPlace)) {
+            System.out.println("String cannot be empty");
+          }
 
         } while (Utility.isEmpty(secondPlace));
 
@@ -313,7 +335,9 @@ public class Main {
         injectionID = sc.nextLine();
 
         injection = controller.get(injectionID);
-        if (injection == null) {
+        if (Utility.isEmpty(injectionID)) {
+          System.out.println("String cannot be empty");
+        } else if (injection == null) {
           System.out.println("This injection does not exist, please try a different!");
         }
       } while (Utility.isEmpty(injectionID) || injection == null);
@@ -360,6 +384,9 @@ public class Main {
         System.out.print("Enter student ID: ");
         studentID = sc.nextLine();
 
+        if (Utility.isEmpty(studentID)) {
+          System.out.println("String cannot be empty");
+        }
         if (studentController.get(studentID) == null) {
           System.out.println("This student does not exist, please try a different!");
         }
