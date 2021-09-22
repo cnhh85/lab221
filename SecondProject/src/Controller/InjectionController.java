@@ -38,6 +38,16 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
 		return null;
 	}
 
+	public Injection getByStudentID(String studentID) {
+		for (Injection injection : this) {
+			if (injection.getStudentID().equals(studentID)) {
+				return injection;
+			}
+		}
+		
+		return null;
+	}
+
 	public void getAll() {
 		boolean readMode = true;
 		open(readMode);
@@ -122,16 +132,16 @@ public class InjectionController extends ArrayList<Injection> implements FileCon
 	}
 
 	public void printInjectionList() {
-			System.out.println("\n\nINJECTIONS LIST:");
-			System.out.println(
-					"===================================================================================================");
-			System.out.format("|%13s|%12s|%12s|%15s|%12s|%15s|%12s|\n", "InjectionID", "StudentID", "VaccineID", "FirstPlace",
-					"FirstDate", "SecondPlace", "SecondDate");
-			System.out.println(
-					"|-------------------------------------------------------------------------------------------------|");
-			this.forEach(injection -> printInjection(injection));
-			System.out.println(
-					"===================================================================================================\n\n");
+		System.out.println("\n\nINJECTIONS LIST:");
+		System.out
+				.println("===================================================================================================");
+		System.out.format("|%13s|%12s|%12s|%15s|%12s|%15s|%12s|\n", "InjectionID", "StudentID", "VaccineID", "FirstPlace",
+				"FirstDate", "SecondPlace", "SecondDate");
+		System.out
+				.println("|-------------------------------------------------------------------------------------------------|");
+		this.forEach(injection -> printInjection(injection));
+		System.out.println(
+				"===================================================================================================\n\n");
 
 	}
 

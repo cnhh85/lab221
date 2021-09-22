@@ -92,7 +92,7 @@ public class Main {
       Date firstDate = null;
       Date secondDate = null;
 
-      System.out.println("\n\nADD AN INJECTION\n");
+      System.out.println("\n\nADD AN INJECTION\n\n");
 
       do {
         System.out.print("Enter injection ID: ");
@@ -107,10 +107,14 @@ public class Main {
       do {
         System.out.print("Enter student ID: ");
         studentID = sc.nextLine();
+
         if (studentController.get(studentID) == null) {
           System.out.println("This student does not exist, please try a different!");
+        } else if (controller.getByStudentID(studentID) == null) {
+          System.out.println("This student already has an injection, please try a different!");
         }
-      } while (Utility.isEmpty(studentID) || studentController.get(studentID) == null);
+      } while (Utility.isEmpty(studentID) || studentController.get(studentID) == null
+          || controller.getByStudentID(studentID) == null);
 
       vaccineController.printVaccineList();
 
@@ -370,7 +374,7 @@ public class Main {
       Scanner sc = new Scanner(System.in);
       String confirmation = null;
       do {
-        System.out.println("\n\nThere is no injection, do you want to save an empty file (Y/N): \n\n");
+        System.out.print("\n\nThere is no injection, do you want to save an empty file (Y/N): ");
         confirmation = sc.nextLine();
         if (!confirmation.matches("[YyNn]")) {
           confirmation = null;
