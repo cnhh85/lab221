@@ -211,9 +211,11 @@ public class Main {
 
         if (!continueConfirmation.matches("[YyNn]")) {
           continueConfirmation = null;
+
         }
       } while (continueConfirmation == null);
     } while (continueConfirmation.toUpperCase().equals("Y"));
+    System.out.println("\n");
   }
 
   private static void updateInjection(InjectionController controller, StudentController studentController,
@@ -226,7 +228,7 @@ public class Main {
       Injection injection = null;
       Date secondDate = null;
 
-      String injectionID = null, keepUpdate = null, secondPlace, secondDateInput;
+      String injectionID = null, secondPlace, secondDateInput;
       int idx;
 
       do {
@@ -392,6 +394,7 @@ public class Main {
       }
     } else {
       controller.saveToFile();
+      System.out.println("Save successfully!\n\n");
     }
 
   }
